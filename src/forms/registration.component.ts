@@ -43,6 +43,7 @@ export class LocksmithRegistrationComponent extends LitElement {
         margin-top: 0.5rem;
         font-size: 0.85rem;
         color: #464646;
+        line-height: 1.15rem;
       }
 
       p#error {

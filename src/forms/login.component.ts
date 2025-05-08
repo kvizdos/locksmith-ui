@@ -123,7 +123,7 @@ export class LocksmithLoginComponent extends LitElement {
     OauthProviders: [],
   };
 
-  @property() originOverride?: string = "http://localhost:3000";
+  @property() originOverride?: string = "";
 
   @state() showingPassword: boolean = false;
 
@@ -288,7 +288,7 @@ export class LocksmithLoginComponent extends LitElement {
           >Sign in</button-component
         >
 
-        <a href="#">Forgot Password</a>
+        <a href="/reset-password">Forgot Password</a>
       </div>
 
       ${this.settings.OauthProviders.length > 0
