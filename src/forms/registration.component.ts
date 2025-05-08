@@ -142,6 +142,7 @@ export class LocksmithRegistrationComponent extends LitElement {
   }
 
   async attemptRegistration() {
+    this.errorMsg = undefined;
     if (!this.canSignIn()) {
       this.errorMsg = "Please enter a username and password.";
       if (this.emailRef.value?.value.length === 0) {

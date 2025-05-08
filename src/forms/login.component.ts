@@ -192,9 +192,8 @@ export class LocksmithLoginComponent extends LitElement {
   }
 
   async attemptSignIn() {
+    this.errorMsg = undefined;
     if (!this.canSignIn()) {
-      this.errorMsg = undefined;
-      await this.updateComplete;
       this.errorMsg = `Please enter your username and password.`;
       // this.errorMsg =
       //   "Please enter your username and password." + crypto.randomUUID();
@@ -229,7 +228,8 @@ export class LocksmithLoginComponent extends LitElement {
     return html` <div id="root" class="${this.loadedOnce ? "" : "hide"}">
       <div id="header">
         <h1>Sign in to ${this.appName}</h1>
-        ${this.settings.PublicRegistrationsDisabled !== true
+        ${this.settings.PublicRegistrationsDisabled !== true ||
+        this.isOnboarding
           ? html`
               <p id="intro">
                 ${!this.isOnboarding
