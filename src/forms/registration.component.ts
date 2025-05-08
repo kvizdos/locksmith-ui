@@ -71,6 +71,8 @@ export class LocksmithRegistrationComponent extends LitElement {
 
   @property() inviteCode: string = "";
 
+  @property() appName: string = "FILL ME";
+
   @property() minimumPasswordLength: number = 6;
   @state()
   showingPassword: boolean = false;
@@ -180,7 +182,7 @@ export class LocksmithRegistrationComponent extends LitElement {
   render() {
     return html` <div id="root">
       <div id="header">
-        <h1>Sign up to Attendance</h1>
+        <h1>Sign up to ${this.appName}</h1>
         ${this.forceEmail.length === 0
           ? html`
               <p id="intro">
