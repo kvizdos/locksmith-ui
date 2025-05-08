@@ -124,7 +124,10 @@ export class LocksmithRegistrationComponent extends LitElement {
       if (resp.status === 400) {
         const js = await resp.json();
         if (js.error === "password too short") {
-          throw new Error("Password too short");
+          throw new Error("Password too short.");
+        }
+        if (js.error === "illegal username characters") {
+          throw new Error("Email must be a valid email.");
         }
       }
       throw new Error("Something went wrong.");

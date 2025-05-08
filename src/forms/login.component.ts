@@ -76,6 +76,10 @@ export class LocksmithLoginComponent extends LitElement {
         color: #000;
       }
 
+      button.oauth img {
+        height: 1rem;
+      }
+
       button {
         cursor: pointer;
       }
