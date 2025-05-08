@@ -133,11 +133,24 @@ export class LocksmithLoginComponent extends LitElement {
 
   @state() loadedOnce: boolean = false;
 
+  @state() isOnboarding: boolean = false;
+
   signInRef: Ref<ButtonComponent> = createRef();
 
   emailRef: Ref<HTMLInputElement> = createRef();
 
   passwordRef: Ref<HTMLInputElement> = createRef();
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    const onboardParam = new URLSearchParams(window.location.search).get(
+      "onboard",
+    );
+
+    if (onboardParam === "true") {
+      this.isOnboarding = true;
+    }
+  }
 
   firstUpdated() {
     this.emailRef.value?.focus();
@@ -198,12 +211,15 @@ export class LocksmithLoginComponent extends LitElement {
 
     try {
       await this.sendLoginRequest();
-      window.location.href = "/app";
+      window.location.href =
+        this.isOnboarding && this.settings.PathToOnboard !== undefined
+          ? this.settings.PathToOnboard
+          : "/app";
     } catch (e) {
       console.error(e);
       this.errorMsg = undefined;
       await this.updateComplete;
-      this.errorMsg = e.message;
+      this.errorMsg = "Something went wrong. Please try again later.";
     } finally {
       this.signInRef.value!.loading = false;
     }
@@ -216,7 +232,11 @@ export class LocksmithLoginComponent extends LitElement {
         ${this.settings.PublicRegistrationsDisabled !== true
           ? html`
               <p id="intro">
-                Need an account? <a href="/register">Create account</a>
+                ${!this.isOnboarding
+                  ? html`Need an account?
+                      <a href="/register">Create account</a>`
+                  : html`<strong>Welcome!</strong> Please sign in for the first
+                      time.`}
               </p>
             `
           : html``}
