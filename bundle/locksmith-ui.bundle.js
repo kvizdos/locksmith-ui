@@ -485,7 +485,7 @@ const yt=(t,e)=>{const i=t._$AN;if(void 0===i)return!1;for(const t of i)t._$AO?.
         color: #000;
       }
 
-      button.oauth img {
+      a.oauth img {
         height: 1rem;
       }
 
