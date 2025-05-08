@@ -9,3 +9,19 @@ declare module "firelight-ui/inputs/checkbox.component" {
 declare module "firelight-ui/icons/ui-icon.component" {
   export * from "firelight-ui/dist/icons/ui-icon.component";
 }
+
+declare module "firelight-ui/feedback/prompt.component" {
+  export * from "firelight-ui/dist/feedback/prompt.component";
+}
+
+declare module "firelight-ui/feedback/alert.component" {
+  export * from "firelight-ui/dist/feedback/alert.component";
+}
+
+declare module "firelight-ui/feedback/feedback.functions" {
+  export * from "firelight-ui/dist/feedback/feedback.functions";
+}
+
+declare module "firelight-ui/feedback/toast.component" {
+  export * from "firelight-ui/dist/feedback/toast.component";
+}

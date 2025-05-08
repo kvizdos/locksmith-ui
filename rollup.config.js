@@ -2,12 +2,25 @@ import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import terser from "@rollup/plugin-terser";
 
-export default {
-	input: "dist/index.js",
-	output: {
-		file: "bundle/locksmith-ui.bundle.js",
-		format: "esm",
-		sourcemap: true,
+const sharedPlugins = [resolve(), commonjs(), terser()];
+
+export default [
+	{
+		input: "dist/index.js",
+		output: {
+			file: "bundle/locksmith-ui.bundle.js",
+			format: "esm",
+			sourcemap: true,
+		},
+		plugins: sharedPlugins,
 	},
-	plugins: [resolve(), commonjs(), terser()],
-};
+	{
+		input: "dist/administration.js",
+		output: {
+			file: "bundle/locksmith-admin.bundle.js",
+			format: "esm",
+			sourcemap: true,
+		},
+		plugins: sharedPlugins,
+	},
+];

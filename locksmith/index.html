@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+        />
+        <script
+            type="module"
+            src="/dist/administration/outlet/outlet.js"
+        ></script>
+
+        <meta name="theme-color" content="#7a60f4" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+            rel="stylesheet"
+        />
+
+        <style>
+            * {
+                font-family: "Inter", sans-serif;
+                touch-action: manipulation;
+            }
+            *:has(:not(:defined)) {
+                visibility: hidden;
+            }
+        </style>
+
+        <style>
+            body {
+                margin: 0;
+                --background-color: rgb(243, 243, 250);
+                --primary-50: #eef6ff;
+                --primary-100: #d9eaff;
+                --primary-200: #bcdaff;
+                --primary-300: #8ec4ff;
+                --primary-400: #59a2ff;
+                --primary-500: #327eff;
+                --primary-600: #1a5cf4;
+                --primary-700: #1448e1;
+                --primary-800: #173ab6;
+                --primary-900: #19378f;
+                --primary-950: #142257;
+
+                --danger-50: #fff1f2;
+                --danger-100: #ffe4e6;
+                --danger-200: #fecdd3;
+                --danger-300: #fda4af;
+                --danger-400: #fb7185;
+                --danger-500: #f3405d;
+                --danger-600: #e01e47;
+                --danger-700: #b8123a;
+                --danger-800: #9f1239;
+                --danger-900: #881337;
+                --danger-950: #4c0519;
+
+                --gray-50: #f8f8f8;
+                --gray-100: #eaeaea;
+                --gray-200: #dcdcdc;
+                --gray-300: #bdbdbd;
+                --gray-400: #989898;
+                --gray-500: #7c7c7c;
+                --gray-600: #656565;
+                --gray-700: #525252;
+                --gray-800: #464646;
+                --gray-900: #3d3d3d;
+                --gray-950: #292929;
+            }
+            @media (min-width: 650px) {
+                body {
+                    background-color: var(--background-color);
+                }
+            }
+            * {
+                box-sizing: border-box;
+                margin: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="outlet"></div>
+    </body>
+</html>

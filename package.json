@@ -35,6 +35,7 @@
     "@web/dev-server": "^0.4.6",
     "@web/dev-server-rollup": "^0.6.4",
     "eslint": "^9.23.0",
+    "express": "^5.1.0",
     "lit-analyzer": "^2.0.3",
     "rollup": "^4.40.2",
     "svgo": "^3.3.2",
