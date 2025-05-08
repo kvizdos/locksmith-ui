@@ -2,14 +2,21 @@
   "name": "locksmith-ui",
   "version": "0.0.1",
   "type": "module",
+  "exports": {
+    ".": {
+      "import": "./bundle/locksmith-ui.bundle.js"
+    }
+  },
   "files": [
-    "dist"
+    "dist",
+    "bundle"
   ],
   "scripts": {
     "build": "rimraf ./dist && tsc --declaration",
     "dev": "rimraf ./dist && tsc --watch",
     "lint": "eslint 'src/**/*.{ts,js}'",
-    "serve": "web-dev-server --open --watch --node-resolve"
+    "serve": "web-dev-server --open --watch --node-resolve",
+    "bundle": "rollup -c"
   },
   "dependencies": {
     "@lit-app/state": "^1.0.0",
@@ -19,14 +26,19 @@
     "lit": "^3.0.0"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.3",
     "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^12.1.2",
     "@typescript-eslint/eslint-plugin": "^8.28.0",
     "@typescript-eslint/parser": "^8.28.0",
     "@web/dev-server": "^0.4.6",
     "@web/dev-server-rollup": "^0.6.4",
     "eslint": "^9.23.0",
     "lit-analyzer": "^2.0.3",
+    "rollup": "^4.40.2",
     "svgo": "^3.3.2",
+    "tslib": "^2.8.1",
     "typescript": "^4.5.2"
   }
 }
