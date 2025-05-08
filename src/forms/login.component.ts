@@ -219,7 +219,7 @@ export class LocksmithLoginComponent extends LitElement {
       console.error(e);
       this.errorMsg = undefined;
       await this.updateComplete;
-      this.errorMsg = "Something went wrong. Please try again later.";
+      this.errorMsg = e.message;
     } finally {
       this.signInRef.value!.loading = false;
     }
