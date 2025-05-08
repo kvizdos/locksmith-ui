@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "lit-analyzer"
+      }
+    ],
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "target": "es2018",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "declaration": true,
+    "noEmitOnError": true,
+    "noImplicitReturns": false,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitThis": true,
+    "isolatedModules": false,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": false,
+    "strictFunctionTypes": false,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "declarationMap": true, // helpful for source navigation in IDEs
+    "resolveJsonModule": true, // just in case future components import JSON
+    "forceConsistentCasingInFileNames": true // ensures no casing mismatches (esp. cross-platform)
+  },
+  "include": ["src/**/*.ts"]
+}
