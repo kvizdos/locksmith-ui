@@ -9,6 +9,8 @@
         <script type="module" src="/dist/layout/locksmith.layout.js"></script>
         <script type="module" src="/dist/forms/login.component.js"></script>
 
+        <meta name="theme-color" content="#7a60f4" />
+
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
@@ -35,7 +37,11 @@
                 --fl-button-text-disabled: #eeefff;
                 --fl-button-loader-spinner: var(--fl-button-bg-disabled);
                 --fl-button-loader-loop: #eeefff;
-                background-color: var(--background-color);
+            }
+            @media (min-width: 650px) {
+                body {
+                    background-color: var(--background-color);
+                }
             }
             * {
                 box-sizing: border-box;

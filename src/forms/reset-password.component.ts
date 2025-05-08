@@ -264,6 +264,8 @@ export class LocksmithResetPasswordComponent extends LitElement {
             contact us.
           </p>
         </div>
+
+        <a href="/login">Back to Login</a>
       </div>`;
     }
 

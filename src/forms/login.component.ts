@@ -63,7 +63,7 @@ export class LocksmithLoginComponent extends LitElement {
         color: var(--accent);
       }
 
-      button.oauth {
+      a.oauth {
         border: 1px solid var(--input-border, #bdbdbd);
         background: #fff;
         font-size: 1rem;
@@ -73,6 +73,8 @@ export class LocksmithLoginComponent extends LitElement {
         align-items: center;
         justify-content: space-between;
         gap: 1rem;
+        color: #000;
+        text-decoration: none;
         color: #000;
       }
 
@@ -302,10 +304,10 @@ export class LocksmithLoginComponent extends LitElement {
         : undefined}
       ${this.settings.OauthProviders.map(
         (provider) => html`
-      <button class="oauth">
+      <a class="oauth" href="/api/auth/oauth/${provider}">
         <img src="/api/auth/oauth/${provider}/logo"></img>
           Sign in with ${provider}
-          <span></span></button>
+          <span></span></a>
       `,
       )}
     </div>`;
