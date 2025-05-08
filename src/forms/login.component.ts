@@ -10,6 +10,7 @@ import "firelight-ui/icons/ui-icon.component";
 export interface LoginOptions {
   OauthProviders: string[];
   PathToOnboard?: string;
+  PublicRegistrationsDisabled?: boolean;
 }
 
 @customElement("locksmith-login")
@@ -30,6 +31,11 @@ export class LocksmithLoginComponent extends LitElement {
         display: flex;
         gap: 2rem;
         flex-direction: column;
+        opacity: 1;
+      }
+
+      #root.hide {
+        opacity: 0;
       }
 
       #inputs .input-container:last-of-type {
@@ -55,16 +61,6 @@ export class LocksmithLoginComponent extends LitElement {
 
       a {
         color: var(--accent);
-      }
-
-      button#signin {
-        background-color: var(--login-button-background, #327eff);
-        border: 0;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        font-weight: 600;
-        font-size: 1rem;
-        color: var(--login-button-text-color, #fff);
       }
 
       button.oauth {
@@ -129,6 +125,8 @@ export class LocksmithLoginComponent extends LitElement {
 
   @state() errorMsg?: string = undefined;
 
+  @state() loadedOnce: boolean = false;
+
   signInRef: Ref<ButtonComponent> = createRef();
 
   emailRef: Ref<HTMLInputElement> = createRef();
@@ -140,6 +138,7 @@ export class LocksmithLoginComponent extends LitElement {
     if (this.jsonSettings !== "") {
       setTimeout(() => {
         this.settings = JSON.parse(this.jsonSettings);
+        this.loadedOnce = true;
       });
     }
   }
@@ -205,12 +204,16 @@ export class LocksmithLoginComponent extends LitElement {
   }
 
   render() {
-    return html` <div id="root">
+    return html` <div id="root" class="${this.loadedOnce ? "" : "hide"}">
       <div id="header">
         <h1>Sign in to ${this.appName}</h1>
-        <p id="intro">
-          Need an account? <a href="/register">Create account</a>
-        </p>
+        ${this.settings.PublicRegistrationsDisabled !== true
+          ? html`
+              <p id="intro">
+                Need an account? <a href="/register">Create account</a>
+              </p>
+            `
+          : html``}
         <p
           id="error"
           aria-live="assertive"
@@ -296,7 +299,7 @@ export class LocksmithLoginComponent extends LitElement {
       ${this.settings.OauthProviders.map(
         (provider) => html`
       <button class="oauth">
-        <img src="/api/auth/oauth/${provider}"></img>
+        <img src="/api/auth/oauth/${provider}/logo"></img>
           Sign in with ${provider}
           <span></span></button>
       `,

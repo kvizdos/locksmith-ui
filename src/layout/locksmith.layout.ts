@@ -79,19 +79,21 @@ export class LocksmithLayout extends LitElement {
     `,
   ];
 
+  @property() logoURL?: string;
+
   render() {
     return html`<div id="root">
       <header>
-        <img src="https://payments.blueprinteducation.org/favicon.ico" />
+        ${this.logoURL !== undefined && this.logoURL !== ""
+          ? html` <img src="${this.logoURL}" /> `
+          : html``}
       </header>
       <main>
         <div id="slotWrapper">
           <slot name="main"></slot>
         </div>
       </main>
-      <footer>
-        <p>Footer</p>
-      </footer>
+      <footer></footer>
     </div>`;
   }
 }

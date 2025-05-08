@@ -65,9 +65,15 @@ export class LocksmithRegistrationComponent extends LitElement {
     `,
   ];
 
-  @property() originOverride?: string = "http://localhost:3000";
+  @property() originOverride?: string = "";
 
-  @state() showingPassword: boolean = false;
+  @property() forceEmail: string = "";
+
+  @property() inviteCode: string = "";
+
+  @property() minimumPasswordLength: number = 6;
+  @state()
+  showingPassword: boolean = false;
 
   @state() errorMsg?: string = undefined;
 
@@ -103,7 +109,7 @@ export class LocksmithRegistrationComponent extends LitElement {
       username: this.emailRef.value!.value,
       email: this.emailRef.value!.value,
       password: this.passwordRef.value!.value,
-      code: "",
+      code: this.inviteCode,
     };
 
     const resp = await fetch(`${this.originOverride ?? ""}/api/register`, {
@@ -125,6 +131,10 @@ export class LocksmithRegistrationComponent extends LitElement {
     }
   }
 
+  passwordLongEnough() {
+    return this.passwordRef.value?.value.length >= this.minimumPasswordLength;
+  }
+
   async attemptRegistration() {
     if (!this.canSignIn()) {
       this.errorMsg = "Please enter a username and password.";
@@ -141,6 +151,12 @@ export class LocksmithRegistrationComponent extends LitElement {
     if (!this.doPasswordsMatch()) {
       this.errorMsg = "The password must match.";
       this.passwordConfirmationRef.value?.focus();
+      return;
+    }
+
+    if (!this.passwordLongEnough()) {
+      this.errorMsg = `Password must be at least ${this.minimumPasswordLength} characters long.`;
+      this.passwordRef.value?.focus();
       return;
     }
 
@@ -162,9 +178,13 @@ export class LocksmithRegistrationComponent extends LitElement {
     return html` <div id="root">
       <div id="header">
         <h1>Sign up to Attendance</h1>
-        <p id="intro">
-          Already have an account? <a href="/login">Sign in instead</a>
-        </p>
+        ${this.forceEmail.length === 0
+          ? html`
+              <p id="intro">
+                Already have an account? <a href="/login">Sign in instead</a>
+              </p>
+            `
+          : html``}
         <p id="error">${this.errorMsg}</p>
       </div>
 
@@ -178,6 +198,8 @@ export class LocksmithRegistrationComponent extends LitElement {
             autocapitalize="off"
             autocapitalize="off"
             placeholder="Your email"
+            value="${this.forceEmail}"
+            ?disabled=${this.forceEmail.length > 0}
           />
         </div>
 
@@ -196,7 +218,7 @@ export class LocksmithRegistrationComponent extends LitElement {
               <p>${this.showingPassword ? "Hide" : "Show"}</p>
             </button>
           </label>
-          <p>Must be at least 8 characters long.</p>
+          <p>Must be at least ${this.minimumPasswordLength} characters long.</p>
           <input
             id="password"
             ${ref(this.passwordRef)}
