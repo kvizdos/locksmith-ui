@@ -156,7 +156,12 @@ export class LocksmithLoginComponent extends LitElement {
     this.emailRef.value?.focus();
     if (this.jsonSettings !== "") {
       setTimeout(() => {
-        this.settings = JSON.parse(this.jsonSettings);
+        try {
+          this.settings = JSON.parse(this.jsonSettings);
+        } catch (err) {
+          console.error("Invalid JSON in jsonSettings:", this.jsonSettings);
+          throw err;
+        }
         this.loadedOnce = true;
       });
     }
@@ -246,8 +251,8 @@ export class LocksmithLoginComponent extends LitElement {
                 ${!this.isOnboarding
                   ? html`Need an account?
                       <a href="/register">Create account</a>`
-                  : html`<strong>Welcome!</strong> Please sign in for the first
-                      time.`}
+                  : html`<strong>Thank you for registering.</strong> Please sign
+                      in for the first time to ensure everything works.`}
               </p>
             `
           : html``}
