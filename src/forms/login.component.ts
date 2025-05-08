@@ -224,6 +224,17 @@ export class LocksmithLoginComponent extends LitElement {
     }
   }
 
+  keydownEvent(e: KeyboardEvent) {
+    if (e.key !== "Enter") return;
+
+    if (
+      this.emailRef.value?.value.length > 0 &&
+      this.passwordRef.value?.value.length > 0
+    ) {
+      this.attemptSignIn();
+    }
+  }
+
   render() {
     return html` <div id="root" class="${this.loadedOnce ? "" : "hide"}">
       <div id="header">
@@ -255,6 +266,7 @@ export class LocksmithLoginComponent extends LitElement {
         <div class="input-container">
           <label for="username">Email Address</label>
           <input
+            @keydown=${this.keydownEvent}
             id="username"
             ${ref(this.emailRef)}
             autofill="username"
@@ -291,6 +303,7 @@ export class LocksmithLoginComponent extends LitElement {
             </button>
           </label>
           <input
+            @keydown=${this.keydownEvent}
             id="password"
             ${ref(this.passwordRef)}
             autofill="password"
