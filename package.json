@@ -9,6 +9,10 @@
     "./sdk": {
       "import": "./dist/sdk/sdk.js",
       "types": "./dist/sdk/sdk.d.ts"
+    },
+    "./sdk/*": {
+      "import": "./dist/sdk/*.js",
+      "types": "./dist/sdk/*.d.ts"
     }
   },
   "typesVersions": {
