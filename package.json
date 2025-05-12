@@ -11,6 +11,13 @@
       "types": "./dist/sdk/sdk.d.ts"
     }
   },
+  "typesVersions": {
+    "*": {
+      "locksmith-ui/sdk": [
+        "dist/sdk"
+      ]
+    }
+  },
   "files": [
     "dist",
     "bundle"
