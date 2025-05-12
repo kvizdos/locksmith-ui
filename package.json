@@ -5,6 +5,10 @@
   "exports": {
     ".": {
       "import": "./bundle/locksmith-ui.bundle.js"
+    },
+    "./sdk": {
+      "import": "./dist/sdk/sdk.js",
+      "types": "./dist/sdk/sdk.d.ts"
     }
   },
   "files": [
