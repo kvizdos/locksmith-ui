@@ -6,6 +6,7 @@ import "firelight-ui/feedback/prompt.component";
 import "firelight-ui/feedback/confirm.component";
 import "firelight-ui/feedback/alert.component";
 import "firelight-ui/icons/ui-icon.component";
+import "../../sdk/components/user-icon.component";
 import {
   DismissToast,
   NotifyToast,
@@ -417,17 +418,10 @@ export class DashboardLayoutComponent extends LitElement {
                   >${path.name}</a
                 >`;
               })}
-              <a
-                href="/dashboard/settings"
-                aria-label="Settings"
-                class="${
-                  window.location.pathname === "/dashboard/settings"
-                    ? "active"
-                    : ""
-                }"
-                ><ui-icon name="cog" size="20px"></ui-icon></span
-                ><span class="desktop-hide">&nbsp;Settings</span></a
-              >
+              <locksmith-user-icon .location=${{
+                vertical: "bottom",
+                horizontal: "right",
+              }}></locksmith-user-icon>
 
               <button
                 id="mobile-ham"

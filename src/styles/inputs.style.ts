@@ -64,6 +64,7 @@ export const inputStyles = css`
     color: var(--accent);
     align-items: center;
     font-weight: 600;
+    cursor: pointer;
     gap: 0.5rem;
   }
   .input-container > label:has(~ input:required)::after {

@@ -4,12 +4,10 @@ import "./pages/users.page"; // Adding the lit-app component here for better per
 import "../styles"; // Adding the lit-app component here for better performance
 import { IconComponent } from "firelight-ui/icons/ui-icon.component";
 
-IconComponent.colorways = {
-  primary: {
-    primary: "var(--primary-800)",
-    secondary: "var(--primary-300)",
-    shadow: "var(--gray-600)",
-  },
+IconComponent.colorways.primary = {
+  primary: "var(--primary-800)",
+  secondary: "var(--primary-300)",
+  shadow: "var(--gray-600)",
 };
 
 const routes = [

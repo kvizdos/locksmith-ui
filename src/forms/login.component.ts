@@ -6,6 +6,8 @@ import { ButtonComponent } from "firelight-ui/buttons/button.component";
 import { createRef, ref, Ref } from "lit/directives/ref.js";
 import { GenerateFingerprint } from "../helpers/fingerprint";
 import "firelight-ui/icons/ui-icon.component";
+import { aboutMe } from "../sdk/aboutme.state";
+import { StateController } from "@lit-app/state";
 
 export interface LoginOptions {
   OauthProviders: string[];
@@ -141,6 +143,8 @@ export class LocksmithLoginComponent extends LitElement {
 
   passwordRef: Ref<HTMLInputElement> = createRef();
 
+  private aboutMeState = new StateController(this, aboutMe);
+
   connectedCallback(): void {
     super.connectedCallback();
     const onboardParam = new URLSearchParams(window.location.search).get(
@@ -174,7 +178,17 @@ export class LocksmithLoginComponent extends LitElement {
     );
   }
 
-  async sendLoginRequest() {
+  private lockInputs() {
+    this.emailRef.value!.disabled = true;
+    this.passwordRef.value!.disabled = true;
+  }
+
+  private unlockInputs() {
+    this.emailRef.value!.disabled = false;
+    this.passwordRef.value!.disabled = false;
+  }
+
+  private async sendLoginRequest() {
     const fp = await GenerateFingerprint();
     const body = {
       username: this.emailRef.value!.value,
@@ -194,9 +208,11 @@ export class LocksmithLoginComponent extends LitElement {
       }
       throw new Error("Something went wrong.");
     }
+
+    await aboutMe.loadIfNeeded(true);
   }
 
-  async attemptSignIn() {
+  private async attemptSignIn() {
     this.errorMsg = undefined;
     if (!this.canSignIn()) {
       this.errorMsg = `Please enter your username and password.`;
@@ -211,6 +227,7 @@ export class LocksmithLoginComponent extends LitElement {
     }
 
     this.signInRef.value!.loading = true;
+    this.lockInputs();
     this.requestUpdate();
 
     try {
@@ -226,6 +243,7 @@ export class LocksmithLoginComponent extends LitElement {
       this.errorMsg = e.message;
     } finally {
       this.signInRef.value!.loading = false;
+      this.unlockInputs();
     }
   }
 
@@ -344,7 +362,8 @@ export class LocksmithLoginComponent extends LitElement {
         (provider) => html`
       <a class="oauth" href="/api/auth/oauth/${provider}">
         <img src="/api/auth/oauth/${provider}/logo"></img>
-          Sign in with ${provider}
+          Sign in with
+          ${provider.charAt(0).toUpperCase() + provider.slice(1)}
           <span></span></a>
       `,
       )}

@@ -7,7 +7,7 @@
             content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
         />
         <script type="module" src="/dist/layout/locksmith.layout.js"></script>
-        <script type="module" src="/dist/forms/login.component.js"></script>
+        <script type="module" src="/dist/debug/about-me.debug.js"></script>
 
         <meta name="theme-color" content="#7a60f4" />
 
@@ -52,10 +52,7 @@
     <body>
         <locksmith-layout>
             <section slot="main">
-                <locksmith-login
-                    appName="Demo App"
-                    jsonSettings='{"OauthProviders": ["google"]}'
-                ></locksmith-login>
+                <about-me-debug></about-me-debug>
             </section>
         </locksmith-layout>
     </body>
@@ -63,6 +60,9 @@
     <script type="module">
         import { AboutMeState } from "/dist/sdk/aboutme.state.js";
 
+        AboutMeState.SignOutCallback = (obj) => {
+            console.warn("Logging out: ", obj);
+        };
         AboutMeState.GetExtraAboutMe = async (obj) => {
             console.info("Getting extra info about", obj);
             const resp = await fetch("/about-me-extras");

@@ -25,3 +25,11 @@ declare module "firelight-ui/feedback/feedback.functions" {
 declare module "firelight-ui/feedback/toast.component" {
   export * from "firelight-ui/dist/feedback/toast.component";
 }
+
+declare module "firelight-ui/navigation/navigation.types" {
+  export * from "firelight-ui/dist/navigation/navigation.types";
+}
+
+declare module "firelight-ui/navigation/quick.navigation" {
+  export * from "firelight-ui/dist/navigation/quick.navigation";
+}

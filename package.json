@@ -21,7 +21,7 @@
   "dependencies": {
     "@lit-app/state": "^1.0.0",
     "@vaadin/router": "^2.0.0",
-    "firelight-ui": "^0.14.0",
+    "firelight-ui": "^0.15.6",
     "js-confetti": "^0.12.0",
     "lit": "^3.0.0"
   },
