@@ -7,12 +7,6 @@ import "firelight-ui/icons/ui-icon.component";
 import { inputStyles } from "../styles/inputs.style";
 import { LocksmithUpdateEmailComponent } from "./profile/update-email.component";
 
-export interface LoginOptions {
-  OauthProviders: string[];
-  PathToOnboard?: string;
-  PublicRegistrationsDisabled?: boolean;
-}
-
 @customElement("locksmith-profile")
 export class LocksmithProfileComponent extends LitElement {
   static styles = [
