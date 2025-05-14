@@ -5,12 +5,6 @@ import { StateController } from "@lit-app/state";
 import { customElement, property, state } from "lit/decorators.js";
 import { ref, createRef, Ref } from "lit/directives/ref.js";
 
-export interface LoginOptions {
-  OauthProviders: string[];
-  PathToOnboard?: string;
-  PublicRegistrationsDisabled?: boolean;
-}
-
 @customElement("locksmith-user-icon")
 export class LocksmithUserIconComponent extends LitElement {
   static styles = [

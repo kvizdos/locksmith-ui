@@ -5,3 +5,4 @@ export * from "./forms/profile.component";
 export * from "./helpers/fingerprint";
 export * from "./layout/locksmith.layout";
 export * from "./styles/inputs.style";
+export * from "./sdk/sdk";

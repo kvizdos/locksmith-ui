@@ -23,8 +23,13 @@ export class LocksmithUpdateEmailComponent extends LitElement {
     return html`<div class="input-container">
       <label>
         Email Address
-        <button>Change Email</button>
+        ${aboutMe.hasPermission("user.update.email")
+          ? html` <button>Change Email</button> `
+          : html``}
       </label>
+      ${!aboutMe.hasPermission("user.update.email")
+        ? html` <p>Please contact us to change your account email.</p> `
+        : html``}
       <input value="${aboutMe.email}" disabled />
     </div>`;
   }
