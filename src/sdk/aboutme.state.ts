@@ -39,6 +39,10 @@ export class AboutMeState extends State {
     return this.info["email"];
   }
 
+  get role() {
+    return this.info["role"];
+  }
+
   @storage({ key: "x", prefix: "_identity" })
   @property()
   rawExtras: string;
@@ -101,6 +105,25 @@ export class AboutMeState extends State {
 
   hasPermission(perm: string) {
     return (this.permissions || "").split(",").includes(perm);
+  }
+
+  hasRole(role: string[] | string) {
+    if (Array.isArray(role)) {
+      return role.some((r) => this.role === r);
+    } else {
+      return this.role === role;
+    }
+  }
+
+  get isLaunchpad() {
+    const cookies = document.cookie.split(";");
+    for (let cookie of cookies) {
+      cookie = cookie.trim();
+      if (cookie.startsWith("LaunchpadUser" + "=")) {
+        return cookie.substring("LaunchpadUser".length + 1);
+      }
+    }
+    return undefined;
   }
 
   private clear() {

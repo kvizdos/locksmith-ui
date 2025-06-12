@@ -174,6 +174,54 @@ export class LocksmithUserIconComponent extends LitElement {
       :host([location-horizontal="right"]) #dropdown {
         left: calc(-1 * var(--width) - 1rem);
       }
+
+      #launchpad {
+        box-sizing: border-box;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100svw;
+        padding: 1rem;
+        background-color: var(--primary-300, #327eff);
+        color: var(--white, #fff);
+        font-size: 1rem;
+        z-index: 1000;
+
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+
+        justify-content: space-between;
+      }
+
+      #launchpad div {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+      }
+
+      #launchpad #launchpad-status {
+        font-weight: 600;
+      }
+
+      #launchpad * {
+        margin: 0;
+        padding: 0;
+      }
+
+      #launchpad a {
+        color: #fff;
+      }
+
+      #launchpad button {
+        color: #fff;
+        margin: 0;
+        padding: 0;
+        border: none;
+        background-color: transparent;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
     `,
   ];
 
@@ -186,6 +234,8 @@ export class LocksmithUserIconComponent extends LitElement {
   };
 
   @state() open: boolean = false;
+
+  @state() launchpadForceClosed: boolean = false;
 
   updated() {
     this.setAttribute("location-vertical", this.location.vertical);
@@ -235,60 +285,80 @@ export class LocksmithUserIconComponent extends LitElement {
 
   render() {
     return html` <div id="container">
-      <button
-        id="box"
-        @click=${this.openClicked}
-        aria-label="User profile"
-        aria-expanded="${this.open ? "true" : "false"}"
-        aria-controls="dropdown"
-        aria-haspopup="menu"
-      >
-        <ui-icon name="person" size="1.25rem"></ui-icon>
-      </button>
+        <button
+          id="box"
+          @click=${this.openClicked}
+          aria-label="User profile"
+          aria-expanded="${this.open ? "true" : "false"}"
+          aria-controls="dropdown"
+          aria-haspopup="menu"
+        >
+          <ui-icon name="person" size="1.25rem"></ui-icon>
+        </button>
 
-      <div id="dropdown" class="${!this.open ? "closed" : ""}">
-        <div id="header">
-          <div>
-            <p id="title">${aboutMe.username}</p>
-            <p id="desc">${aboutMe.email}</p>
+        <div id="dropdown" class="${!this.open ? "closed" : ""}">
+          <div id="header">
+            <div>
+              <p id="title">${aboutMe.username}</p>
+              <p id="desc">${aboutMe.email}</p>
+            </div>
+          </div>
+
+          <div id="actions">
+            <button
+              ${ref(this.manageAccountButton)}
+              @click=${() => {
+                window.location.href = "/profile";
+              }}
+            >
+              <ui-icon name="cog" size="1rem"></ui-icon>
+              Manage Account
+              <span></span>
+            </button>
+            ${aboutMe.hasPermission("view.ls-admin")
+              ? html`
+                  <button
+                    @click=${() => {
+                      window.location.href = "/locksmith";
+                    }}
+                  >
+                    <ui-icon name="person-group" size="1rem"></ui-icon>
+                    Administration
+                    <span></span>
+                  </button>
+                `
+              : undefined}
+            <button
+              id="logout"
+              @click=${() => {
+                aboutMe.signOut();
+              }}
+            >
+              <ui-icon name="sign-out" size="1rem" colorway="danger"></ui-icon>
+              Sign out
+            </button>
           </div>
         </div>
-
-        <div id="actions">
-          <button
-            ${ref(this.manageAccountButton)}
-            @click=${() => {
-              window.location.href = "/profile";
-            }}
-          >
-            <ui-icon name="cog" size="1rem"></ui-icon>
-            Manage Account
-            <span></span>
-          </button>
-          ${aboutMe.hasPermission("view.ls-admin")
-            ? html`
-                <button
-                  @click=${() => {
-                    window.location.href = "/locksmith";
-                  }}
-                >
-                  <ui-icon name="person-group" size="1rem"></ui-icon>
-                  Administration
-                  <span></span>
-                </button>
-              `
-            : undefined}
-          <button
-            id="logout"
-            @click=${() => {
-              aboutMe.signOut();
-            }}
-          >
-            <ui-icon name="sign-out" size="1rem" colorway="danger"></ui-icon>
-            Sign out
-          </button>
-        </div>
       </div>
-    </div>`;
+
+      ${aboutMe.isLaunchpad !== undefined && !this.launchpadForceClosed
+        ? html`<div id="launchpad">
+            <div>
+              <p id="launchpad-status">Launchpad</p>
+              <p id="launchpad-user">Viewing app as ${aboutMe.isLaunchpad}</p>
+            </div>
+
+            <div>
+              <a href="/launchpad"> Switch User </a>
+              <button
+                @click=${() => {
+                  this.launchpadForceClosed = true;
+                }}
+              >
+                &times;
+              </button>
+            </div>
+          </div>`
+        : undefined}`;
   }
 }
