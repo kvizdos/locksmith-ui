@@ -2078,10 +2078,12 @@ const ie=t=>(e,r)=>{void 0!==r?r.addInitializer((()=>{customElements.define(t,e)
         left: 0;
         width: 100svw;
         padding: 1rem;
-        background-color: var(--primary-300, #327eff);
-        color: var(--white, #fff);
+        background-color: #fff;
+        color: black;
         font-size: 1rem;
         z-index: 1000;
+
+        border-top: 2px solid var(--primary-800, #173ab6);
 
         display: flex;
         gap: 1rem;
@@ -2106,11 +2108,11 @@ const ie=t=>(e,r)=>{void 0!==r?r.addInitializer((()=>{customElements.define(t,e)
       }
 
       #launchpad a {
-        color: #fff;
+        color: black;
       }
 
       #launchpad button {
-        color: #fff;
+        color: black;
         margin: 0;
         padding: 0;
         border: none;
