@@ -351,7 +351,6 @@ export class LocksmithUserIconComponent extends LitElement {
             </div>
 
             <div>
-              <a href="/launchpad"> Switch User </a>
               <button
                 @click=${() => {
                   this.launchpadForceClosed = true;
