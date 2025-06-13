@@ -182,12 +182,12 @@ export class LocksmithUserIconComponent extends LitElement {
         left: 0;
         width: 100svw;
         padding: 1rem;
-        background-color: #fff;
-        color: black;
+        background-color: var(--danger-600, #e01e47);
+        color: var(--danger-50, #fff1f2);
         font-size: 1rem;
         z-index: 1000;
 
-        border-top: 2px solid var(--primary-800, #173ab6);
+        border-top: 2px solid var(--danger-800, #9f1239);
 
         display: flex;
         gap: 1rem;
@@ -212,11 +212,11 @@ export class LocksmithUserIconComponent extends LitElement {
       }
 
       #launchpad a {
-        color: black;
+        color: var(--danger-50, #fff1f2);
       }
 
       #launchpad button {
-        color: black;
+        color: var(--danger-50, #fff1f2);
         margin: 0;
         padding: 0;
         border: none;
@@ -346,8 +346,13 @@ export class LocksmithUserIconComponent extends LitElement {
       ${aboutMe.isLaunchpad !== undefined && !this.launchpadForceClosed
         ? html`<div id="launchpad">
             <div>
-              <p id="launchpad-status">Launchpad</p>
-              <p id="launchpad-user">Viewing app as ${aboutMe.isLaunchpad}</p>
+              <p id="launchpad-status">
+                ${aboutMe.isLaunchpad.toUpperCase()} Role
+              </p>
+              <p id="launchpad-user">
+                This is what the ${aboutMe.isLaunchpad.toUpperCase()} role would
+                see.
+              </p>
             </div>
 
             <div>
