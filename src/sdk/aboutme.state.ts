@@ -32,15 +32,15 @@ export class AboutMeState extends State {
   }
 
   get username() {
-    return this.info["username"].split("@")[0];
+    return this.info?.["username"].split("@")[0] ?? "unknown";
   }
 
   get email() {
-    return this.info["email"];
+    return this.info?.["email"] ?? "unknown";
   }
 
   get role() {
-    return this.info["role"];
+    return this.info?.["role"] ?? "unknown";
   }
 
   @storage({ key: "x", prefix: "_identity" })
