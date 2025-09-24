@@ -137,6 +137,8 @@ export class LocksmithLoginComponent extends LitElement {
 
   @state() isOnboarding: boolean = false;
 
+  @state() loadingProvider: string | null = null;
+
   signInRef: Ref<ButtonComponent> = createRef();
 
   emailRef: Ref<HTMLInputElement> = createRef();
@@ -147,12 +149,20 @@ export class LocksmithLoginComponent extends LitElement {
 
   connectedCallback(): void {
     super.connectedCallback();
-    const onboardParam = new URLSearchParams(window.location.search).get(
-      "onboard",
-    );
 
-    if (onboardParam === "true") {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    if (urlParams.get("onboard") === "true") {
       this.isOnboarding = true;
+    }
+
+    const errParam = urlParams.get("err");
+    if (errParam) {
+      switch (errParam) {
+        case "oauth_email_not_found":
+          this.errorMsg = "No account is associated with that email address.";
+          break;
+      }
     }
   }
 
@@ -232,10 +242,25 @@ export class LocksmithLoginComponent extends LitElement {
 
     try {
       await this.sendLoginRequest();
-      window.location.href =
+      console.log("In here");
+      let url =
         this.isOnboarding && this.settings.PathToOnboard !== undefined
           ? this.settings.PathToOnboard
           : "/app";
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const rawBackTo = urlParams.get("b");
+      console.log("RBT", rawBackTo);
+      if (rawBackTo) {
+        const backTo = decodeURIComponent(rawBackTo);
+        console.log("BackTo", backTo);
+        if (backTo.length > 0 && backTo[0] === "/") {
+          console.log("Set URL to", backTo);
+          url = backTo;
+        }
+      }
+
+      window.location.href = url;
     } catch (e) {
       console.error(e);
       this.errorMsg = undefined;
@@ -360,10 +385,14 @@ export class LocksmithLoginComponent extends LitElement {
         : undefined}
       ${this.settings.OauthProviders.map(
         (provider) => html`
-      <a class="oauth" href="/api/auth/oauth/${provider}">
+      <a class="oauth" href="/api/auth/oauth/${provider}"
+          @click=${(e: Event) => {
+            e.preventDefault();
+            this.loadingProvider = provider;
+            window.location.href = (e.currentTarget as HTMLAnchorElement).href;
+          }}>
         <img src="/api/auth/oauth/${provider}/logo"></img>
-          Sign in with
-          ${provider.charAt(0).toUpperCase() + provider.slice(1)}
+            ${this.loadingProvider === provider ? "Logging in..." : `Sign in with ${provider.charAt(0).toUpperCase() + provider.slice(1)}`}
           <span></span></a>
       `,
       )}

@@ -99,7 +99,7 @@ export class AboutMeState extends State {
       }
     } catch (err) {
       console.error("Failed to load /me:", err);
-      window.location.href = "/login";
+      window.location.href = `/login?b=${encodeURIComponent(window.location.pathname + window.location.search)}&utm_source=locksmith&utm_campaign=session_expired`;
     }
   }
 
