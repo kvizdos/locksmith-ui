@@ -242,7 +242,6 @@ export class LocksmithLoginComponent extends LitElement {
 
     try {
       await this.sendLoginRequest();
-      console.log("In here");
       let url =
         this.isOnboarding && this.settings.PathToOnboard !== undefined
           ? this.settings.PathToOnboard
@@ -250,12 +249,9 @@ export class LocksmithLoginComponent extends LitElement {
 
       const urlParams = new URLSearchParams(window.location.search);
       const rawBackTo = urlParams.get("b");
-      console.log("RBT", rawBackTo);
       if (rawBackTo) {
         const backTo = decodeURIComponent(rawBackTo);
-        console.log("BackTo", backTo);
         if (backTo.length > 0 && backTo[0] === "/") {
-          console.log("Set URL to", backTo);
           url = backTo;
         }
       }
