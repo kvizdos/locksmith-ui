@@ -97,6 +97,19 @@ export class AboutMeState extends State {
         });
         this.extras = res;
       }
+
+      window.dispatchEvent(
+        new CustomEvent("locksmith-aboutme", {
+          detail: {
+            id: data.info["id"],
+            username: data.info["username"],
+            role: data.info["role"],
+            permissions: data.info["permissions"],
+          },
+          bubbles: true,
+          composed: true,
+        }),
+      );
     } catch (err) {
       console.error("Failed to load /me:", err);
       window.location.href = `/login?b=${encodeURIComponent(window.location.pathname + window.location.search)}&utm_source=locksmith&utm_campaign=session_expired`;
