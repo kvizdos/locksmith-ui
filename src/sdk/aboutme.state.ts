@@ -71,7 +71,14 @@ export class AboutMeState extends State {
   @property()
   loadedAt: string;
 
+  @property()
+  private aboutMeSent: boolean;
+
   private sendAboutMeUp() {
+    if (this.aboutMeSent) {
+      return;
+    }
+    this.aboutMeSent = true;
     window.dispatchEvent(
       new CustomEvent("locksmith-aboutme", {
         detail: {
