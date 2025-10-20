@@ -71,13 +71,31 @@ export class AboutMeState extends State {
   @property()
   loadedAt: string;
 
+  private sendAboutMeUp() {
+    window.dispatchEvent(
+      new CustomEvent("locksmith-aboutme", {
+        detail: {
+          id: this.info.id,
+          username: this.info.username,
+          role: this.info.role,
+          permissions: this.permissions.split(","),
+        },
+        bubbles: true,
+        composed: true,
+      }),
+    );
+  }
+
   async loadIfNeeded(force = false) {
     const now = Date.now();
     const infoLoaded = this.infoRaw !== "";
     const permsLoaded = this.permissions?.length > 0;
     const isExpired = +this.loadedAt !== 0 && now - +this.loadedAt > TTL_MS;
 
-    if (infoLoaded && permsLoaded && !isExpired && !force) return;
+    if (infoLoaded && permsLoaded && !isExpired && !force) {
+      this.sendAboutMeUp();
+      return;
+    }
 
     try {
       const res = await fetch("/api/management/me");
@@ -93,23 +111,12 @@ export class AboutMeState extends State {
           id: data.info["id"],
           username: data.info["username"],
           role: data.info["role"],
-          permissions: data.info["permissions"],
+          permissions: data.permissions,
         });
         this.extras = res;
       }
 
-      window.dispatchEvent(
-        new CustomEvent("locksmith-aboutme", {
-          detail: {
-            id: data.info["id"],
-            username: data.info["username"],
-            role: data.info["role"],
-            permissions: data.info["permissions"],
-          },
-          bubbles: true,
-          composed: true,
-        }),
-      );
+      this.sendAboutMeUp();
     } catch (err) {
       console.error("Failed to load /me:", err);
       window.location.href = `/login?b=${encodeURIComponent(window.location.pathname + window.location.search)}&utm_source=locksmith&utm_campaign=session_expired`;
