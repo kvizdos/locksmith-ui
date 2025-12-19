@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+        />
+        <script type="module" src="/dist/layout/locksmith.layout.js"></script>
+        <script type="module" src="/dist/forms/error.component.js"></script>
+
+        <meta name="theme-color" content="#7a60f4" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+            rel="stylesheet"
+        />
+
+        <style>
+            * {
+                font-family: "Inter", sans-serif;
+                touch-action: manipulation;
+            }
+        </style>
+
+        <style>
+            body {
+                margin: 0;
+                --background-color: rgb(243, 243, 250);
+                --accent: #7a60f4;
+                --fl-button-bg: #6c43e8;
+                --fl-button-bg-hover: #7a60f4;
+                --fl-button-bg-active: #7a60f4;
+                --fl-button-bg-disabled: #4c2ea5;
+                --fl-button-text-disabled: #eeefff;
+                --fl-button-loader-spinner: var(--fl-button-bg-disabled);
+                --fl-button-loader-loop: #eeefff;
+            }
+            @media (min-width: 650px) {
+                body {
+                    background-color: var(--background-color);
+                }
+            }
+            * {
+                box-sizing: border-box;
+                margin: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <locksmith-layout>
+            <section slot="main">
+                <locksmith-error
+                    appName="Demo App"
+                    errorTitle="You are not authorized to access the LMS."
+                    errorDescription="If you are a student, make sure you are logging in with your student account. Parents can view progress by clicking 'Return to App'"
+                ></locksmith-error>
+            </section>
+        </locksmith-layout>
+    </body>
+
+    <script type="module"></script>
+</html>
