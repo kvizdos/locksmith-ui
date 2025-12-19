@@ -1,4 +1,5 @@
 export * from "./forms/login.component";
+export * from "./forms/error.component";
 export * from "./forms/registration.component";
 export * from "./forms/reset-password.component";
 export * from "./forms/profile.component";
