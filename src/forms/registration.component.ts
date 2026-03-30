@@ -94,7 +94,7 @@ export class LocksmithRegistrationComponent extends LitElement {
 
   @state() errorMsg?: string = undefined;
 
-  @state() didYouMean?: string = "kvizdos@gmail.com";
+  @state() didYouMean?: string;
 
   @state() confirmEmailRequired: boolean = false;
 
