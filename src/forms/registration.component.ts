@@ -165,7 +165,7 @@ export class LocksmithRegistrationComponent extends LitElement {
           }
           this.confirmEmailRequired = true;
           throw new Error(
-            "Are you sure the email address is spelled correctly?",
+            "We couldn't verify this email address. Please double-check for typos before trying again.",
           );
         }
       }
