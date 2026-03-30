@@ -4,6 +4,7 @@ export * from "./forms/registration.component";
 export * from "./forms/reset-password.component";
 export * from "./forms/profile.component";
 export * from "./forms/verify-email.component";
+export * from "./forms/verify-code.component";
 export * from "./helpers/fingerprint";
 export * from "./layout/locksmith.layout";
 export * from "./styles/inputs.style";
