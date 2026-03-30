@@ -59,6 +59,20 @@ export class LocksmithRegistrationComponent extends LitElement {
         cursor: pointer;
       }
 
+      button#didYouMean {
+        background: none;
+        border: none;
+        color: #b8123a;
+        font-size: 0.85rem;
+        text-align: left;
+        margin-bottom: 0.5rem;
+        padding: 0;
+      }
+
+      button#didYouMean > span {
+        text-decoration: underline;
+      }
+
       ui-icon {
         --primary-600: var(--accent);
         --primary-500: var(--accent);
@@ -79,6 +93,10 @@ export class LocksmithRegistrationComponent extends LitElement {
   showingPassword: boolean = false;
 
   @state() errorMsg?: string = undefined;
+
+  @state() didYouMean?: string = "kvizdos@gmail.com";
+
+  @state() confirmEmailRequired: boolean = false;
 
   signUpRef: Ref<ButtonComponent> = createRef();
 
@@ -113,7 +131,11 @@ export class LocksmithRegistrationComponent extends LitElement {
       email: this.emailRef.value!.value,
       password: this.passwordRef.value!.value,
       code: this.inviteCode,
+      validationok: this.confirmEmailRequired,
     };
+
+    this.confirmEmailRequired = false;
+    this.didYouMean = undefined;
 
     const resp = await fetch(`${this.originOverride ?? ""}/api/register`, {
       method: "POST",
@@ -131,6 +153,20 @@ export class LocksmithRegistrationComponent extends LitElement {
         }
         if (js.error === "illegal username characters") {
           throw new Error("Email must be a valid email.");
+        }
+        if (js.rejectEmail) {
+          throw new Error(
+            "This email address is invalid. If you need help, please contact support.",
+          );
+        }
+        if (js.confirmEmail) {
+          if (js.didYouMean) {
+            this.didYouMean = js.didYouMean;
+          }
+          this.confirmEmailRequired = true;
+          throw new Error(
+            "Are you sure the email address is spelled correctly?",
+          );
         }
       }
       throw new Error("Something went wrong.");
@@ -198,6 +234,18 @@ export class LocksmithRegistrationComponent extends LitElement {
       <div id="inputs">
         <div class="input-container">
           <label for="username">Email Address</label>
+          ${this.didYouMean
+            ? html`<button
+                id="didYouMean"
+                @click=${() => {
+                  this.emailRef.value!.value = this.didYouMean;
+                  this.emailRef.value!.focus();
+                  this.didYouMean = undefined;
+                }}
+              >
+                Did you mean <span>${this.didYouMean}</span>?
+              </button>`
+            : html``}
           <input
             id="username"
             ${ref(this.emailRef)}
