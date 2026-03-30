@@ -1051,7 +1051,10 @@ const ye=(e,t)=>{const i=e._$AN;if(void 0===i)return!1;for(const e of i)e._$AO?.
           verification link in the email to continue.<br /><br />
 
           <strong>Didn't get the email?</strong> Make sure to check your spam
-          folder.
+          folder.<br /><br />
+
+          <strong>Mistype the email?</strong> Please contact support and we'll
+          get it changed.
         </p>
       </div>
 

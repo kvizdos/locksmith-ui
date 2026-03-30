@@ -176,7 +176,10 @@ export class LocksmithVerifyEmailComponent extends LitElement {
           verification link in the email to continue.<br /><br />
 
           <strong>Didn't get the email?</strong> Make sure to check your spam
-          folder.
+          folder.<br /><br />
+
+          <strong>Mistype the email?</strong> Please contact support and we'll
+          get it changed.
         </p>
       </div>
 
