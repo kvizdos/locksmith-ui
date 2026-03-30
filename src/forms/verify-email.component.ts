@@ -97,7 +97,6 @@ export class LocksmithVerifyEmailComponent extends LitElement {
   }
 
   private startResendPeriod(duration: number) {
-    duration = 1;
     this.resendDisabled = true;
     this.resendSecondsLeft = duration;
 
@@ -130,9 +129,10 @@ export class LocksmithVerifyEmailComponent extends LitElement {
       if (resp.status !== 200) {
         if (resp.status === 429) {
           this.errorMsg = "Please wait before trying again or contact support.";
-        } else {
-          this.errorMsg = "Please contact support.";
+          return;
         }
+
+        this.errorMsg = "Please contact support.";
         return;
       }
 
