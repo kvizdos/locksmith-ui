@@ -98,6 +98,8 @@ export class LocksmithRegistrationComponent extends LitElement {
 
   @state() confirmEmailRequired: boolean = false;
 
+  @state() validationok: boolean = false;
+
   signUpRef: Ref<ButtonComponent> = createRef();
 
   emailRef: Ref<HTMLInputElement> = createRef();
@@ -131,9 +133,10 @@ export class LocksmithRegistrationComponent extends LitElement {
       email: this.emailRef.value!.value,
       password: this.passwordRef.value!.value,
       code: this.inviteCode,
-      validationok: this.confirmEmailRequired,
+      validationok: this.validationok,
     };
 
+    this.validationok = false;
     this.confirmEmailRequired = false;
     this.didYouMean = undefined;
 
@@ -164,6 +167,7 @@ export class LocksmithRegistrationComponent extends LitElement {
             this.didYouMean = js.didYouMean;
           }
           this.confirmEmailRequired = true;
+          this.validationok = true;
           throw new Error(
             "We couldn't verify this email address. Please double-check for typos before trying again.",
           );
@@ -255,6 +259,10 @@ export class LocksmithRegistrationComponent extends LitElement {
             placeholder="Your email"
             value="${this.forceEmail}"
             ?disabled=${this.forceEmail.length > 0}
+            @input=${() => {
+              this.validationok = false;
+              this.didYouMean = undefined;
+            }}
           />
         </div>
 
@@ -301,7 +309,9 @@ export class LocksmithRegistrationComponent extends LitElement {
         .expectLoad=${true}
         .loadingText=${"Signing Up.."}
         @fl-click=${this.attemptRegistration}
-        >Sign Up</button-component
+        >${this.confirmEmailRequired
+          ? "Confirm & Sign Up"
+          : "Sign Up"}</button-component
       >
     </div>`;
   }
