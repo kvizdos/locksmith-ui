@@ -109,6 +109,9 @@ export class LocksmithVerifyCodeComponent extends LitElement {
 
   constructor() {
     super();
+  }
+
+  firstUpdated() {
     this.exchangeCode();
   }
 
