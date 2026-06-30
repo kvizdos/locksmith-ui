@@ -159,6 +159,8 @@ export class LocksmithRegistrationComponent extends LitElement {
 
   @state() loadingProvider?: string = undefined;
 
+  @state() passwordValue = "";
+
   signUpRef: Ref<ButtonComponent> = createRef();
 
   emailRef: Ref<HTMLInputElement> = createRef();
@@ -363,21 +365,28 @@ export class LocksmithRegistrationComponent extends LitElement {
             id="password"
             ${ref(this.passwordRef)}
             autocomplete="new-password"
+            @input=${(e: Event) => {
+              this.passwordValue = (e.target as HTMLInputElement).value;
+            }}
             type="${this.showingPassword ? "text" : "password"}"
             placeholder="Your password"
           />
         </div>
 
-        <div class="input-container">
-          <label for="password">Confirm your Password</label>
-          <input
-            id="password"
-            ${ref(this.passwordConfirmationRef)}
-            autocomplete="new-password"
-            type="${this.showingPassword ? "text" : "password"}"
-            placeholder="Confirm your Password"
-          />
-        </div>
+        ${this.passwordValue.length > 0
+          ? html`
+              <div class="input-container">
+                <label for="password">Confirm your Password</label>
+                <input
+                  id="password"
+                  ${ref(this.passwordConfirmationRef)}
+                  autocomplete="new-password"
+                  type="${this.showingPassword ? "text" : "password"}"
+                  placeholder="Confirm your Password"
+                />
+              </div>
+            `
+          : html``}
       </div>
 
       <button-component
@@ -391,17 +400,18 @@ export class LocksmithRegistrationComponent extends LitElement {
           : "Sign Up"}</button-component
       >
 
-      ${this.settings.OauthProviders.length > 0
-        ? html`
-            <div class="hr-split">
-              <hr />
-              <p>Or...</p>
-              <hr />
-            </div>
-          `
-        : undefined}
-      ${this.settings.OauthProviders.map(
-        (provider) => html`
+      ${this.passwordValue.length === 0
+        ? html` ${this.settings.OauthProviders.length > 0
+            ? html`
+                <div class="hr-split">
+                  <hr />
+                  <p>Or...</p>
+                  <hr />
+                </div>
+              `
+            : undefined}
+          ${this.settings.OauthProviders.map(
+            (provider) => html`
       <a class="oauth" href="/api/auth/oauth/${provider}"
           @click=${(e: Event) => {
             e.preventDefault();
@@ -412,7 +422,8 @@ export class LocksmithRegistrationComponent extends LitElement {
             ${this.renderOauthMethod(provider)}
           <span></span></a>
       `,
-      )}
+          )}`
+        : html``}
     </div>`;
   }
 }
