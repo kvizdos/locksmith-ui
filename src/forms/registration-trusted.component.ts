@@ -79,7 +79,7 @@ export class LocksmithRegisterTrustedComponent extends LitElement {
     if (!this.registrationPacketJWT) return;
 
     try {
-      const resp = await fetch(`/api/register`, {
+      const registerResp = await fetch(`/api/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -87,13 +87,47 @@ export class LocksmithRegisterTrustedComponent extends LitElement {
         },
       });
 
-      if (!resp.ok) {
-        this.errorMsg = await resp.text();
+      if (!registerResp.ok) {
+        this.errorMsg = await registerResp.text();
         return;
       }
+
+      const registerJson = await registerResp.json();
+
+      if (!registerJson.token) {
+        this.errorMsg =
+          "Registration finished, but sign in could not be completed.";
+        return;
+      }
+
+      const loginResp = await fetch(`/api/login`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${registerJson.token}`,
+        },
+      });
+
+      if (!loginResp.ok) {
+        this.errorMsg = await loginResp.text();
+        return;
+      }
+
+      let url = "/app";
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const rawBackTo = urlParams.get("b");
+
+      if (rawBackTo) {
+        const backTo = decodeURIComponent(rawBackTo);
+        if (backTo.length > 0 && backTo[0] === "/") {
+          url = backTo;
+        }
+      }
+
+      window.location.href = url;
     } catch (e) {
-      console.log(e);
-      this.errorMsg = "Failed to register";
+      console.error(e);
+      this.errorMsg = "Failed to finish registration";
     }
   }
 
