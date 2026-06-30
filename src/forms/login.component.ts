@@ -279,6 +279,21 @@ export class LocksmithLoginComponent extends LitElement {
     }
   }
 
+  private renderOauthMethod(provider: string) {
+    if (this.settings.PublicRegistrationsDisabled === true)
+      return html`
+        ${this.loadingProvider === provider
+          ? "Logging in..."
+          : `Sign in with ${provider.charAt(0).toUpperCase() + provider.slice(1)}`}
+      `;
+
+    return html`
+      ${this.loadingProvider === provider
+        ? `Continuing with ${provider.charAt(0).toUpperCase() + provider.slice(1)}`
+        : `Continue with ${provider.charAt(0).toUpperCase() + provider.slice(1)}`}
+    `;
+  }
+
   render() {
     return html` <div id="root" class="${this.loadedOnce ? "" : "hide"}">
       <div id="header">
@@ -388,7 +403,7 @@ export class LocksmithLoginComponent extends LitElement {
             window.location.href = (e.currentTarget as HTMLAnchorElement).href;
           }}>
         <img src="/api/auth/oauth/${provider}/logo"></img>
-            ${this.loadingProvider === provider ? "Logging in..." : `Sign in with ${provider.charAt(0).toUpperCase() + provider.slice(1)}`}
+            ${this.renderOauthMethod(provider)}
           <span></span></a>
       `,
       )}

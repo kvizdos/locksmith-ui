@@ -7,6 +7,10 @@ import { createRef, ref, Ref } from "lit/directives/ref.js";
 import { GenerateFingerprint } from "../helpers/fingerprint";
 import "firelight-ui/icons/ui-icon.component";
 
+export interface RegistrationOptions {
+  OauthProviders: string[];
+}
+
 @customElement("locksmith-registration")
 export class LocksmithRegistrationComponent extends LitElement {
   static styles = [
@@ -77,8 +81,61 @@ export class LocksmithRegistrationComponent extends LitElement {
         --primary-600: var(--accent);
         --primary-500: var(--accent);
       }
+
+      a.oauth {
+        border: 1px solid var(--input-border, #bdbdbd);
+        background: #fff;
+        font-size: 1rem;
+        padding: 0.75rem;
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        color: #000;
+        text-decoration: none;
+        color: #000;
+      }
+
+      a.oauth img {
+        height: 1rem;
+      }
+
+      button {
+        cursor: pointer;
+      }
+      hr {
+        border: 0;
+        border-bottom: 1px solid #dcdcdc;
+      }
+      .hr-split {
+        align-items: center;
+        display: flex;
+        gap: 1rem;
+        width: 100%;
+      }
+      .hr-split hr {
+        width: 100%;
+        height: 0px;
+      }
+      .hr-split p {
+        font-weight: 600;
+        color: #7c7c7c;
+      }
+      #signInArea a {
+        margin-top: 1rem;
+        display: block;
+        font-size: 0.85rem;
+        width: fit-content;
+      }
     `,
   ];
+
+  @property() jsonSettings: string = "";
+
+  @state() settings: RegistrationOptions = {
+    OauthProviders: [],
+  };
 
   @property() originOverride?: string = "";
 
@@ -100,6 +157,8 @@ export class LocksmithRegistrationComponent extends LitElement {
 
   @state() validationok: boolean = false;
 
+  @state() loadingProvider?: string = undefined;
+
   signUpRef: Ref<ButtonComponent> = createRef();
 
   emailRef: Ref<HTMLInputElement> = createRef();
@@ -110,6 +169,16 @@ export class LocksmithRegistrationComponent extends LitElement {
 
   firstUpdated() {
     this.emailRef.value?.focus();
+    if (this.jsonSettings !== "") {
+      setTimeout(() => {
+        try {
+          this.settings = JSON.parse(this.jsonSettings);
+        } catch (err) {
+          console.error("Invalid JSON in jsonSettings:", this.jsonSettings);
+          throw err;
+        }
+      });
+    }
   }
 
   canSignIn() {
@@ -221,6 +290,14 @@ export class LocksmithRegistrationComponent extends LitElement {
     }
   }
 
+  private renderOauthMethod(provider: string) {
+    return html`
+      ${this.loadingProvider === provider
+        ? `Continuing with ${provider.charAt(0).toUpperCase() + provider.slice(1)}`
+        : `Continue with ${provider.charAt(0).toUpperCase() + provider.slice(1)}`}
+    `;
+  }
+
   render() {
     return html` <div id="root">
       <div id="header">
@@ -313,6 +390,29 @@ export class LocksmithRegistrationComponent extends LitElement {
           ? "Confirm & Sign Up"
           : "Sign Up"}</button-component
       >
+
+      ${this.settings.OauthProviders.length > 0
+        ? html`
+            <div class="hr-split">
+              <hr />
+              <p>Or...</p>
+              <hr />
+            </div>
+          `
+        : undefined}
+      ${this.settings.OauthProviders.map(
+        (provider) => html`
+      <a class="oauth" href="/api/auth/oauth/${provider}"
+          @click=${(e: Event) => {
+            e.preventDefault();
+            this.loadingProvider = provider;
+            window.location.href = (e.currentTarget as HTMLAnchorElement).href;
+          }}>
+        <img src="/api/auth/oauth/${provider}/logo"></img>
+            ${this.renderOauthMethod(provider)}
+          <span></span></a>
+      `,
+      )}
     </div>`;
   }
 }
