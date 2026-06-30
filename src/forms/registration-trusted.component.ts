@@ -1,10 +1,7 @@
-import { LitElement, html, css, PropertyValueMap } from "lit";
+import { LitElement, html, css } from "lit";
 import { state, property, customElement } from "lit/decorators.js";
 import { inputStyles } from "../styles/inputs.style";
 import "firelight-ui/buttons/button.component";
-import { ButtonComponent } from "firelight-ui/buttons/button.component";
-import { createRef, ref, Ref } from "lit/directives/ref.js";
-import { GenerateFingerprint } from "../helpers/fingerprint";
 import "firelight-ui/icons/ui-icon.component";
 
 @customElement("locksmith-register-trusted")
@@ -15,6 +12,7 @@ export class LocksmithRegisterTrustedComponent extends LitElement {
       :host {
         display: block;
       }
+
       * {
         box-sizing: border-box;
         margin: 0;
@@ -42,7 +40,9 @@ export class LocksmithRegisterTrustedComponent extends LitElement {
 
       p#error {
         color: #b8123a;
-        margin-top: 0.5rem;
+        margin-top: 0.75rem;
+        font-size: 0.85rem;
+        line-height: 1.15rem;
       }
 
       #spinner {
@@ -52,6 +52,10 @@ export class LocksmithRegisterTrustedComponent extends LitElement {
         border-top-color: var(--accent);
         border-radius: 999px;
         animation: spin 0.8s linear infinite;
+      }
+
+      #actions {
+        margin-top: 1rem;
       }
 
       @keyframes spin {
@@ -82,6 +86,7 @@ export class LocksmithRegisterTrustedComponent extends LitElement {
           Authorization: `Packet ${this.registrationPacketJWT}`,
         },
       });
+
       if (!resp.ok) {
         this.errorMsg = await resp.text();
         return;
@@ -92,17 +97,46 @@ export class LocksmithRegisterTrustedComponent extends LitElement {
     }
   }
 
+  private retryRegistration() {
+    window.location.href = "/register";
+  }
+
   render() {
+    const hasError = !!this.errorMsg;
+
     return html`
       <div id="root">
-        ${!this.errorMsg
+        ${!hasError
           ? html`<div id="spinner" aria-label="Loading"></div>`
           : html``}
-        <div id="header">
-          <h1>Setting up your ${this.appName} account..</h1>
 
-          <p id="intro">This should only take a moment.</p>
-          ${this.errorMsg ? html`<p id="error">${this.errorMsg}</p>` : html``}
+        <div id="header">
+          <h1>
+            ${hasError
+              ? "Something went wrong"
+              : html`Setting up your ${this.appName} account..`}
+          </h1>
+
+          <p id="intro">
+            ${hasError
+              ? "This registration may have expired. This can happen when too much time passes after starting registration with your sign-in provider."
+              : "This should only take a moment."}
+          </p>
+
+          ${hasError
+            ? html`
+                <p id="error">${this.errorMsg}</p>
+
+                <div id="actions">
+                  <button-component
+                    class="big"
+                    @click=${this.retryRegistration}
+                  >
+                    Go Back
+                  </button-component>
+                </div>
+              `
+            : html``}
         </div>
       </div>
     `;
