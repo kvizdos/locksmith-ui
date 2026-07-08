@@ -311,6 +311,23 @@ export class LocksmithRegistrationComponent extends LitElement {
     `;
   }
 
+  private makeBackedLink(to: string): string {
+    const urlParams = new URLSearchParams(window.location.search);
+    const rawBackTo = urlParams.get("b");
+    let back: string;
+    if (rawBackTo) {
+      const backTo = decodeURIComponent(rawBackTo);
+      if (backTo.length > 0 && backTo[0] === "/") {
+        back = backTo;
+      }
+    }
+
+    const searchParams = new URLSearchParams({
+      page: back,
+    });
+    return `/${to}${back ? `?${searchParams.toString()}` : ""}`;
+  }
+
   render() {
     return html` <div id="root">
       <div id="header">
@@ -318,7 +335,8 @@ export class LocksmithRegistrationComponent extends LitElement {
         ${this.forceEmail.length === 0
           ? html`
               <p id="intro">
-                Already have an account? <a href="/login">Sign in instead</a>
+                Already have an account?
+                <a href="${this.makeBackedLink("login")}">Sign in instead</a>
               </p>
             `
           : html``}
