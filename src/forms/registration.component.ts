@@ -421,19 +421,34 @@ export class LocksmithRegistrationComponent extends LitElement {
                 </div>
               `
             : undefined}
-          ${this.settings.OauthProviders.map(
-            (provider) => html`
-      <a class="oauth" href="/api/auth/oauth/${provider}"
+          ${this.settings.OauthProviders.map((provider) => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const rawBackTo = urlParams.get("b");
+            let back: string;
+            if (rawBackTo) {
+              const backTo = decodeURIComponent(rawBackTo);
+              if (backTo.length > 0 && backTo[0] === "/") {
+                back = backTo;
+              }
+            }
+
+            const searchParams = new URLSearchParams({
+              page: back,
+            });
+            const url = `/api/login/${provider}${back ? `?${searchParams.toString()}` : ""}`;
+
+            return html`
+      <a class="oauth" href="${url}"
           @click=${(e: Event) => {
             e.preventDefault();
             this.loadingProvider = provider;
             window.location.href = (e.currentTarget as HTMLAnchorElement).href;
           }}>
-        <img src="/api/auth/oauth/${provider}/logo"></img>
+        <img src="/api/login/${provider}/logo"></img>
             ${this.renderOauthMethod(provider)}
           <span></span></a>
-      `,
-          )}`
+      `;
+          })}`
         : html``}
     </div>`;
   }
