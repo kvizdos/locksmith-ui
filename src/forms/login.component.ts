@@ -280,7 +280,7 @@ export class LocksmithLoginComponent extends LitElement {
     }
 
     const searchParams = new URLSearchParams({
-      page: back,
+      b: back,
     });
     return `/${to}${back ? `?${searchParams.toString()}` : ""}`;
   }
