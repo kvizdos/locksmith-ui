@@ -283,7 +283,18 @@ export class LocksmithRegistrationComponent extends LitElement {
 
     try {
       await this.sendRegistrationRequest();
-      window.location.href = "/app";
+      let url = "/app";
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const rawBackTo = urlParams.get("b");
+      if (rawBackTo) {
+        const backTo = decodeURIComponent(rawBackTo);
+        if (backTo.length > 0 && backTo[0] === "/") {
+          url = backTo;
+        }
+      }
+
+      window.location.href = url;
     } catch (e) {
       console.error(e);
       this.errorMsg = e.message;
