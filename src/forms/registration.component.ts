@@ -283,7 +283,7 @@ export class LocksmithRegistrationComponent extends LitElement {
 
     try {
       await this.sendRegistrationRequest();
-      window.location.href = "/login?onboard=true";
+      window.location.href = "/app";
     } catch (e) {
       console.error(e);
       this.errorMsg = e.message;

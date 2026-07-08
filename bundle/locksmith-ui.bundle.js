@@ -580,7 +580,7 @@ const ye=(e,t)=>{const i=e._$AN;if(void 0===i)return!1;for(const e of i)e._$AO?.
         border: 0.5px solid #dcdcdc;
         margin: 2rem 0;
       }
-    `],Ke([de()],Ge.prototype,"errorTitle",void 0),Ke([de()],Ge.prototype,"errorDescription",void 0),Ge=Ke([ae("locksmith-error")],Ge);var Ze=function(e,t,i,o){var r,s=arguments.length,a=s<3?t:null===o?o=Object.getOwnPropertyDescriptor(t,i):o;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)a=Reflect.decorate(e,t,i,o);else for(var n=e.length-1;n>=0;n--)(r=e[n])&&(a=(s<3?r(a):s>3?r(t,i,a):r(t,i))||a);return s>3&&a&&Object.defineProperty(t,i,a),a};let Qe=class extends re{constructor(){super(...arguments),this.jsonSettings="",this.settings={OauthProviders:[]},this.originOverride="",this.forceEmail="",this.inviteCode="",this.appName="FILL ME",this.minimumPasswordLength=6,this.showingPassword=!1,this.errorMsg=void 0,this.confirmEmailRequired=!1,this.validationok=!1,this.loadingProvider=void 0,this.signUpRef=_e(),this.emailRef=_e(),this.passwordRef=_e(),this.passwordConfirmationRef=_e()}firstUpdated(){var e;null===(e=this.emailRef.value)||void 0===e||e.focus(),""!==this.jsonSettings&&setTimeout((()=>{try{this.settings=JSON.parse(this.jsonSettings)}catch(e){throw console.error("Invalid JSON in jsonSettings:",this.jsonSettings),e}}))}canSignIn(){var e,t,i;return(null===(e=this.emailRef.value)||void 0===e?void 0:e.value.length)>0&&(null===(t=this.passwordRef.value)||void 0===t?void 0:t.value.length)>0&&(null===(i=this.passwordConfirmationRef.value)||void 0===i?void 0:i.value.length)>0}doPasswordsMatch(){var e,t;return(null===(e=this.passwordRef.value)||void 0===e?void 0:e.value)===(null===(t=this.passwordConfirmationRef.value)||void 0===t?void 0:t.value)}async sendRegistrationRequest(){var e;const t={username:this.emailRef.value.value,email:this.emailRef.value.value,password:this.passwordRef.value.value,code:this.inviteCode,validationok:this.validationok};this.validationok=!1,this.confirmEmailRequired=!1,this.didYouMean=void 0;const i=await fetch(`${null!==(e=this.originOverride)&&void 0!==e?e:""}/api/register`,{method:"POST",body:JSON.stringify(t)});if(200!==i.status){if(409===i.status)throw new Error("This email is already being used.");if(400===i.status){const e=await i.json();if("password too short"===e.error)throw new Error("Password too short.");if("illegal username characters"===e.error)throw new Error("Email must be a valid email.");if(e.rejectEmail)throw new Error("This email address is invalid. If you need help, please contact support.");if(e.confirmEmail)throw e.didYouMean&&(this.didYouMean=e.didYouMean),this.confirmEmailRequired=!0,this.validationok=!0,new Error("We couldn't verify this email address. Please double-check for typos before trying again.")}throw new Error("Something went wrong.")}}passwordLongEnough(){var e;return(null===(e=this.passwordRef.value)||void 0===e?void 0:e.value.length)>=this.minimumPasswordLength}async attemptRegistration(){var e,t,i,o,r,s,a;if(this.errorMsg=void 0,!this.canSignIn())return this.errorMsg="Please enter a username and password.",void(0===(null===(e=this.emailRef.value)||void 0===e?void 0:e.value.length)?null===(t=this.emailRef.value)||void 0===t||t.focus():0===(null===(i=this.passwordRef.value)||void 0===i?void 0:i.value.length)?null===(o=this.passwordRef.value)||void 0===o||o.focus():null===(r=this.passwordConfirmationRef.value)||void 0===r||r.focus());if(!this.doPasswordsMatch())return this.errorMsg="The password must match.",void(null===(s=this.passwordConfirmationRef.value)||void 0===s||s.focus());if(!this.passwordLongEnough())return this.errorMsg=`Password must be at least ${this.minimumPasswordLength} characters long.`,void(null===(a=this.passwordRef.value)||void 0===a||a.focus());this.signUpRef.value.loading=!0,this.requestUpdate();try{await this.sendRegistrationRequest(),window.location.href="/login?onboard=true"}catch(e){console.error(e),this.errorMsg=e.message}finally{this.signUpRef.value.loading=!1}}renderOauthMethod(e){return B`
+    `],Ke([de()],Ge.prototype,"errorTitle",void 0),Ke([de()],Ge.prototype,"errorDescription",void 0),Ge=Ke([ae("locksmith-error")],Ge);var Ze=function(e,t,i,o){var r,s=arguments.length,a=s<3?t:null===o?o=Object.getOwnPropertyDescriptor(t,i):o;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)a=Reflect.decorate(e,t,i,o);else for(var n=e.length-1;n>=0;n--)(r=e[n])&&(a=(s<3?r(a):s>3?r(t,i,a):r(t,i))||a);return s>3&&a&&Object.defineProperty(t,i,a),a};let Qe=class extends re{constructor(){super(...arguments),this.jsonSettings="",this.settings={OauthProviders:[]},this.originOverride="",this.forceEmail="",this.inviteCode="",this.appName="FILL ME",this.minimumPasswordLength=6,this.showingPassword=!1,this.errorMsg=void 0,this.confirmEmailRequired=!1,this.validationok=!1,this.loadingProvider=void 0,this.passwordValue="",this.signUpRef=_e(),this.emailRef=_e(),this.passwordRef=_e(),this.passwordConfirmationRef=_e()}firstUpdated(){var e;null===(e=this.emailRef.value)||void 0===e||e.focus(),""!==this.jsonSettings&&setTimeout((()=>{try{this.settings=JSON.parse(this.jsonSettings)}catch(e){throw console.error("Invalid JSON in jsonSettings:",this.jsonSettings),e}}))}canSignIn(){var e,t,i;return(null===(e=this.emailRef.value)||void 0===e?void 0:e.value.length)>0&&(null===(t=this.passwordRef.value)||void 0===t?void 0:t.value.length)>0&&(null===(i=this.passwordConfirmationRef.value)||void 0===i?void 0:i.value.length)>0}doPasswordsMatch(){var e,t;return(null===(e=this.passwordRef.value)||void 0===e?void 0:e.value)===(null===(t=this.passwordConfirmationRef.value)||void 0===t?void 0:t.value)}async sendRegistrationRequest(){var e;const t={username:this.emailRef.value.value,email:this.emailRef.value.value,password:this.passwordRef.value.value,code:this.inviteCode,validationok:this.validationok};this.validationok=!1,this.confirmEmailRequired=!1,this.didYouMean=void 0;const i=await fetch(`${null!==(e=this.originOverride)&&void 0!==e?e:""}/api/register`,{method:"POST",body:JSON.stringify(t)});if(200!==i.status){if(409===i.status)throw new Error("This email is already being used.");if(400===i.status){const e=await i.json();if("password too short"===e.error)throw new Error("Password too short.");if("illegal username characters"===e.error)throw new Error("Email must be a valid email.");if(e.rejectEmail)throw new Error("This email address is invalid. If you need help, please contact support.");if(e.confirmEmail)throw e.didYouMean&&(this.didYouMean=e.didYouMean),this.confirmEmailRequired=!0,this.validationok=!0,new Error("We couldn't verify this email address. Please double-check for typos before trying again.")}throw new Error("Something went wrong.")}}passwordLongEnough(){var e;return(null===(e=this.passwordRef.value)||void 0===e?void 0:e.value.length)>=this.minimumPasswordLength}async attemptRegistration(){var e,t,i,o,r,s,a;if(this.errorMsg=void 0,!this.canSignIn())return this.errorMsg="Please enter a username and password.",void(0===(null===(e=this.emailRef.value)||void 0===e?void 0:e.value.length)?null===(t=this.emailRef.value)||void 0===t||t.focus():0===(null===(i=this.passwordRef.value)||void 0===i?void 0:i.value.length)?null===(o=this.passwordRef.value)||void 0===o||o.focus():null===(r=this.passwordConfirmationRef.value)||void 0===r||r.focus());if(!this.doPasswordsMatch())return this.errorMsg="The password must match.",void(null===(s=this.passwordConfirmationRef.value)||void 0===s||s.focus());if(!this.passwordLongEnough())return this.errorMsg=`Password must be at least ${this.minimumPasswordLength} characters long.`,void(null===(a=this.passwordRef.value)||void 0===a||a.focus());this.signUpRef.value.loading=!0,this.requestUpdate();try{await this.sendRegistrationRequest(),window.location.href="/app"}catch(e){console.error(e),this.errorMsg=e.message}finally{this.signUpRef.value.loading=!1}}renderOauthMethod(e){return B`
       ${this.loadingProvider===e?`Continuing with ${e.charAt(0).toUpperCase()+e.slice(1)}`:`Continue with ${e.charAt(0).toUpperCase()+e.slice(1)}`}
     `}render(){return B` <div id="root">
       <div id="header">
@@ -633,21 +633,24 @@ const ye=(e,t)=>{const i=e._$AN;if(void 0===i)return!1;for(const e of i)e._$AO?.
             id="password"
             ${Me(this.passwordRef)}
             autocomplete="new-password"
+            @input=${e=>{this.passwordValue=e.target.value}}
             type="${this.showingPassword?"text":"password"}"
             placeholder="Your password"
           />
         </div>
 
-        <div class="input-container">
-          <label for="password">Confirm your Password</label>
-          <input
-            id="password"
-            ${Me(this.passwordConfirmationRef)}
-            autocomplete="new-password"
-            type="${this.showingPassword?"text":"password"}"
-            placeholder="Confirm your Password"
-          />
-        </div>
+        ${this.passwordValue.length>0?B`
+              <div class="input-container">
+                <label for="password">Confirm your Password</label>
+                <input
+                  id="password"
+                  ${Me(this.passwordConfirmationRef)}
+                  autocomplete="new-password"
+                  type="${this.showingPassword?"text":"password"}"
+                  placeholder="Confirm your Password"
+                />
+              </div>
+            `:B``}
       </div>
 
       <button-component
@@ -659,20 +662,20 @@ const ye=(e,t)=>{const i=e._$AN;if(void 0===i)return!1;for(const e of i)e._$AO?.
         >${this.confirmEmailRequired?"Confirm & Sign Up":"Sign Up"}</button-component
       >
 
-      ${this.settings.OauthProviders.length>0?B`
-            <div class="hr-split">
-              <hr />
-              <p>Or...</p>
-              <hr />
-            </div>
-          `:void 0}
-      ${this.settings.OauthProviders.map((e=>B`
+      ${0===this.passwordValue.length?B` ${this.settings.OauthProviders.length>0?B`
+                <div class="hr-split">
+                  <hr />
+                  <p>Or...</p>
+                  <hr />
+                </div>
+              `:void 0}
+          ${this.settings.OauthProviders.map((e=>B`
       <a class="oauth" href="/api/auth/oauth/${e}"
           @click=${t=>{t.preventDefault(),this.loadingProvider=e,window.location.href=t.currentTarget.href}}>
         <img src="/api/auth/oauth/${e}/logo"></img>
             ${this.renderOauthMethod(e)}
           <span></span></a>
-      `))}
+      `))}`:B``}
     </div>`}};Qe.styles=[he,s`
       :host {
         display: block;
@@ -786,7 +789,7 @@ const ye=(e,t)=>{const i=e._$AN;if(void 0===i)return!1;for(const e of i)e._$AO?.
         font-size: 0.85rem;
         width: fit-content;
       }
-    `],Ze([de()],Qe.prototype,"jsonSettings",void 0),Ze([ce()],Qe.prototype,"settings",void 0),Ze([de()],Qe.prototype,"originOverride",void 0),Ze([de()],Qe.prototype,"forceEmail",void 0),Ze([de()],Qe.prototype,"inviteCode",void 0),Ze([de()],Qe.prototype,"appName",void 0),Ze([de()],Qe.prototype,"minimumPasswordLength",void 0),Ze([ce()],Qe.prototype,"showingPassword",void 0),Ze([ce()],Qe.prototype,"errorMsg",void 0),Ze([ce()],Qe.prototype,"didYouMean",void 0),Ze([ce()],Qe.prototype,"confirmEmailRequired",void 0),Ze([ce()],Qe.prototype,"validationok",void 0),Ze([ce()],Qe.prototype,"loadingProvider",void 0),Qe=Ze([ae("locksmith-registration")],Qe);var Xe=function(e,t,i,o){var r,s=arguments.length,a=s<3?t:null===o?o=Object.getOwnPropertyDescriptor(t,i):o;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)a=Reflect.decorate(e,t,i,o);else for(var n=e.length-1;n>=0;n--)(r=e[n])&&(a=(s<3?r(a):s>3?r(t,i,a):r(t,i))||a);return s>3&&a&&Object.defineProperty(t,i,a),a};let et=class extends re{constructor(){super(...arguments),this.appName="FILL ME"}firstUpdated(){this.swapRegistrationPacket()}async swapRegistrationPacket(){if(this.registrationPacketJWT)try{const e=await fetch("/api/register",{method:"POST",headers:{"Content-Type":"application/json",Authorization:`Packet ${this.registrationPacketJWT}`}});if(!e.ok)return void(this.errorMsg=await e.text());const t=await e.json();if(!t.token)return void(this.errorMsg="Registration finished, but sign in could not be completed.");const i=await fetch("/api/login",{method:"POST",headers:{Authorization:`Bearer ${t.token}`}});if(!i.ok)return void(this.errorMsg=await i.text());let o="/app";const r=new URLSearchParams(window.location.search).get("b");if(r){const e=decodeURIComponent(r);e.length>0&&"/"===e[0]&&(o=e)}window.location.href=o}catch(e){console.error(e),this.errorMsg="Failed to finish registration"}}retryRegistration(){window.location.href="/register"}render(){const e=!!this.errorMsg;return B`
+    `],Ze([de()],Qe.prototype,"jsonSettings",void 0),Ze([ce()],Qe.prototype,"settings",void 0),Ze([de()],Qe.prototype,"originOverride",void 0),Ze([de()],Qe.prototype,"forceEmail",void 0),Ze([de()],Qe.prototype,"inviteCode",void 0),Ze([de()],Qe.prototype,"appName",void 0),Ze([de()],Qe.prototype,"minimumPasswordLength",void 0),Ze([ce()],Qe.prototype,"showingPassword",void 0),Ze([ce()],Qe.prototype,"errorMsg",void 0),Ze([ce()],Qe.prototype,"didYouMean",void 0),Ze([ce()],Qe.prototype,"confirmEmailRequired",void 0),Ze([ce()],Qe.prototype,"validationok",void 0),Ze([ce()],Qe.prototype,"loadingProvider",void 0),Ze([ce()],Qe.prototype,"passwordValue",void 0),Qe=Ze([ae("locksmith-registration")],Qe);var Xe=function(e,t,i,o){var r,s=arguments.length,a=s<3?t:null===o?o=Object.getOwnPropertyDescriptor(t,i):o;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)a=Reflect.decorate(e,t,i,o);else for(var n=e.length-1;n>=0;n--)(r=e[n])&&(a=(s<3?r(a):s>3?r(t,i,a):r(t,i))||a);return s>3&&a&&Object.defineProperty(t,i,a),a};let et=class extends re{constructor(){super(...arguments),this.appName="FILL ME"}firstUpdated(){this.swapRegistrationPacket()}async swapRegistrationPacket(){if(this.registrationPacketJWT)try{const e=await fetch("/api/register",{method:"POST",headers:{"Content-Type":"application/json",Authorization:`Packet ${this.registrationPacketJWT}`}});if(!e.ok)return void(this.errorMsg=await e.text());const t=await e.json();if(!t.token)return void(this.errorMsg="Registration finished, but sign in could not be completed.");const i=await fetch("/api/login",{method:"POST",headers:{Authorization:`Bearer ${t.token}`}});if(!i.ok)return void(this.errorMsg=await i.text());let o="/app";const r=new URLSearchParams(window.location.search).get("b");if(r){const e=decodeURIComponent(r);e.length>0&&"/"===e[0]&&(o=e)}window.location.href=o}catch(e){console.error(e),this.errorMsg="Failed to finish registration"}}retryRegistration(){window.location.href="/register"}render(){const e=!!this.errorMsg;return B`
       <div id="root">
         ${e?B``:B`<div id="spinner" aria-label="Loading"></div>`}
 
