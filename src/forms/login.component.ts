@@ -4,7 +4,6 @@ import { inputStyles } from "../styles/inputs.style";
 import "firelight-ui/buttons/button.component";
 import { ButtonComponent } from "firelight-ui/buttons/button.component";
 import { createRef, ref, Ref } from "lit/directives/ref.js";
-import { GenerateFingerprint } from "../helpers/fingerprint";
 import "firelight-ui/icons/ui-icon.component";
 import { aboutMe } from "../sdk/aboutme.state";
 import { StateController } from "@lit-app/state";
@@ -199,11 +198,9 @@ export class LocksmithLoginComponent extends LitElement {
   }
 
   private async sendLoginRequest() {
-    const fp = await GenerateFingerprint();
     const body = {
       username: this.emailRef.value!.value,
       password: this.passwordRef.value!.value,
-      fingerprint: fp,
     };
 
     const resp = await fetch(`${this.originOverride ?? ""}/api/login`, {
