@@ -203,11 +203,14 @@ export class LocksmithLoginComponent extends LitElement {
       password: this.passwordRef.value!.value,
     };
 
+    const injectedHeaders = window.locksmith?.injectHeaders?.();
+
+    const headers = new Headers(injectedHeaders);
+    headers.set("Content-Type", "application/json");
+
     const resp = await fetch(`${this.originOverride ?? ""}/api/login`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: headers,
       body: JSON.stringify(body),
     });
 

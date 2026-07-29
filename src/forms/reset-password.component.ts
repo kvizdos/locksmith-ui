@@ -112,13 +112,16 @@ export class LocksmithResetPasswordComponent extends LitElement {
 
     this.resetButtonRef.value!.loading = true;
 
+    const injectedHeaders = window.locksmith?.injectHeaders?.();
+
+    const headers = new Headers(injectedHeaders);
+    headers.set("Content-Type", "application/json");
+
     const resp = await fetch(
       `${this.originOverride ?? ""}/api/reset-password?username=${this.emailRef.value!.value}`,
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: headers,
       },
     );
 
@@ -156,12 +159,15 @@ export class LocksmithResetPasswordComponent extends LitElement {
 
     this.resetFullyButtonRef.value!.loading = true;
 
+    const injectedHeaders = window.locksmith?.injectHeaders?.();
+
+    const headers = new Headers(injectedHeaders);
+    headers.set("Content-Type", "application/json");
+
     const resp = await fetch(
       `${this.originOverride ?? ""}/api/reset-password`,
       {
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: headers,
         method: "PATCH",
         body: JSON.stringify({
           password: this.passwordRef.value!.value,

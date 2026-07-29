@@ -79,12 +79,15 @@ export class LocksmithRegisterTrustedComponent extends LitElement {
     if (!this.registrationPacketJWT) return;
 
     try {
+      const injectedHeaders = window.locksmith?.injectHeaders?.();
+
+      let headers = new Headers(injectedHeaders);
+      headers.set("Content-Type", "application/json");
+      headers.set("Authorization", `Packet ${this.registrationPacketJWT}`);
+
       const registerResp = await fetch(`/api/register`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Packet ${this.registrationPacketJWT}`,
-        },
+        headers: headers,
       });
 
       if (!registerResp.ok) {
@@ -100,12 +103,10 @@ export class LocksmithRegisterTrustedComponent extends LitElement {
         return;
       }
 
+      headers.set("Authorization", `Bearer ${registerJson.token}`);
       const loginResp = await fetch(`/api/login`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${registerJson.token}`,
-        },
+        headers: headers,
       });
 
       if (!loginResp.ok) {

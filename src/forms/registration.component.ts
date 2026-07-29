@@ -210,11 +210,14 @@ export class LocksmithRegistrationComponent extends LitElement {
     this.confirmEmailRequired = false;
     this.didYouMean = undefined;
 
+    const injectedHeaders = window.locksmith?.injectHeaders?.();
+
+    const headers = new Headers(injectedHeaders);
+    headers.set("Content-Type", "application/json");
+
     const resp = await fetch(`${this.originOverride ?? ""}/api/register`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: headers,
       body: JSON.stringify(body),
     });
 

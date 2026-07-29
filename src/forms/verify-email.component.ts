@@ -116,12 +116,16 @@ export class LocksmithVerifyEmailComponent extends LitElement {
 
     try {
       this.resendButtonRef.value!.loading = true;
+
+      const injectedHeaders = window.locksmith?.injectHeaders?.();
+
+      const headers = new Headers(injectedHeaders);
+      headers.set("Content-Type", "application/json");
+
       const resp = await fetch(
         `${this.originOverride ?? ""}/api/verify/resend`,
         {
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: headers,
           method: "POST",
         },
       );

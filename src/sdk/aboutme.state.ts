@@ -105,10 +105,13 @@ export class AboutMeState extends State {
     }
 
     try {
+      const injectedHeaders = window.locksmith?.injectHeaders?.();
+
+      const headers = new Headers(injectedHeaders);
+      headers.set("Content-Type", "application/json");
+
       const res = await fetch("/api/management/me", {
-        headers: {
-          "Content-Type": "application/json",
-        }
+        headers: headers,
       });
       if (!res.ok) throw new Error("Failed to fetch /me");
 
@@ -174,7 +177,14 @@ export class AboutMeState extends State {
       });
     }
     this.clear();
-    window.location.href = "/sign-out";
+
+    const signOutParams = window.locksmith?.signOutParams?.();
+    if (signOutParams) {
+      const params = new URLSearchParams(signOutParams);
+      window.location.href = `/sign-out?${params.toString()}`;
+    } else {
+      window.location.href = "/sign-out";
+    }
   }
 }
 

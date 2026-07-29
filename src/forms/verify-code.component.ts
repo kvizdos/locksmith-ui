@@ -121,13 +121,16 @@ export class LocksmithVerifyCodeComponent extends LitElement {
     this.didVerify = false;
 
     try {
+      const injectedHeaders = window.locksmith?.injectHeaders?.();
+
+      const headers = new Headers(injectedHeaders);
+      headers.set("Content-Type", "application/json");
+
       const resp = await fetch(
         `${this.originOverride ?? ""}/api/verify/exchange`,
         {
           method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
+          headers: headers,
           body: JSON.stringify({
             code: this.code,
           }),
