@@ -4,7 +4,6 @@ import { inputStyles } from "../styles/inputs.style";
 import "firelight-ui/buttons/button.component";
 import { ButtonComponent } from "firelight-ui/buttons/button.component";
 import { createRef, ref, Ref } from "lit/directives/ref.js";
-import { GenerateFingerprint } from "../helpers/fingerprint";
 import "firelight-ui/icons/ui-icon.component";
 
 @customElement("locksmith-reset-password")
@@ -117,6 +116,9 @@ export class LocksmithResetPasswordComponent extends LitElement {
       `${this.originOverride ?? ""}/api/reset-password?username=${this.emailRef.value!.value}`,
       {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
       },
     );
 
@@ -157,6 +159,9 @@ export class LocksmithResetPasswordComponent extends LitElement {
     const resp = await fetch(
       `${this.originOverride ?? ""}/api/reset-password`,
       {
+        headers: {
+          "Content-Type": "application/json",
+        },
         method: "PATCH",
         body: JSON.stringify({
           password: this.passwordRef.value!.value,

@@ -105,7 +105,11 @@ export class AboutMeState extends State {
     }
 
     try {
-      const res = await fetch("/api/management/me");
+      const res = await fetch("/api/management/me", {
+        headers: {
+          "Content-Type": "application/json",
+        }
+      });
       if (!res.ok) throw new Error("Failed to fetch /me");
 
       const data = await res.json();

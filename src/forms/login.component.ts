@@ -208,6 +208,9 @@ export class LocksmithLoginComponent extends LitElement {
 
     const resp = await fetch(`${this.originOverride ?? ""}/api/login`, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(body),
     });
 

@@ -103,6 +103,7 @@ export class LocksmithRegisterTrustedComponent extends LitElement {
       const loginResp = await fetch(`/api/login`, {
         method: "POST",
         headers: {
+          "Content-Type": "application/json",
           Authorization: `Bearer ${registerJson.token}`,
         },
       });
