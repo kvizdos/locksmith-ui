@@ -458,6 +458,15 @@ export class LocksmithRegistrationComponent extends LitElement {
             const searchParams = new URLSearchParams({
               page: back,
             });
+
+
+            const customUrlParams = window.locksmith?.injectURLParams?.();
+            if (customUrlParams) {
+              for (const [key, value] of Object.entries(customUrlParams)) {
+                searchParams.append(key, value);
+              }
+            }
+
             const url = `/api/login/${provider}${back ? `?${searchParams.toString()}` : ""}`;
 
             return html`

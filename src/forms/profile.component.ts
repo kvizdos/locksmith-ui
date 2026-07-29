@@ -1,5 +1,5 @@
 import { LitElement, html, css } from "lit";
-import { state, property, customElement } from "lit/decorators.js";
+import { customElement } from "lit/decorators.js";
 import { aboutMe } from "../sdk/aboutme.state";
 import { StateController } from "@lit-app/state";
 import "firelight-ui/navigation/quick.navigation";

@@ -178,9 +178,9 @@ export class AboutMeState extends State {
     }
     this.clear();
 
-    const signOutParams = window.locksmith?.signOutParams?.();
-    if (signOutParams) {
-      const params = new URLSearchParams(signOutParams);
+    const urlParams = window.locksmith?.injectURLParams?.();
+    if (urlParams) {
+      const params = new URLSearchParams(urlParams);
       window.location.href = `/sign-out?${params.toString()}`;
     } else {
       window.location.href = "/sign-out";
