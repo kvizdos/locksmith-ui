@@ -182,8 +182,6 @@ export class LocksmithRegistrationComponent extends LitElement {
 
   passwordRef: Ref<HTMLInputElement> = createRef();
 
-  passwordConfirmationRef: Ref<HTMLInputElement> = createRef();
-
   evpTokenRef: Ref<HTMLInputElement> = createRef();
 
   firstUpdated() {
@@ -204,15 +202,7 @@ export class LocksmithRegistrationComponent extends LitElement {
   canSignIn() {
     return (
       (this.emailRef.value?.value.length ?? 0) > 0 &&
-      (this.passwordRef.value?.value.length ?? 0) > 0 &&
-      (this.passwordConfirmationRef.value?.value.length ?? 0) > 0
-    );
-  }
-
-  doPasswordsMatch() {
-    return (
-      this.passwordRef.value?.value ===
-      this.passwordConfirmationRef.value?.value
+      (this.passwordRef.value?.value.length ?? 0) > 0
     );
   }
 
@@ -303,16 +293,8 @@ export class LocksmithRegistrationComponent extends LitElement {
         this.emailRef.value?.focus();
       } else if ((this.passwordRef.value?.value.length ?? 0) === 0) {
         this.passwordRef.value?.focus();
-      } else {
-        this.passwordConfirmationRef.value?.focus();
       }
 
-      return;
-    }
-
-    if (!this.doPasswordsMatch()) {
-      this.errorMsg = "The password must match.";
-      this.passwordConfirmationRef.value?.focus();
       return;
     }
 
@@ -357,8 +339,6 @@ export class LocksmithRegistrationComponent extends LitElement {
    */
   private handleSubmit(e: SubmitEvent) {
     e.preventDefault();
-
-    console.debug("EVP token:", this.evpTokenRef.value?.value);
 
     void this.attemptRegistration();
   }
@@ -509,27 +489,7 @@ export class LocksmithRegistrationComponent extends LitElement {
               />
             </div>
 
-            ${this.passwordValue.length > 0
-              ? html`
-                  <div class="input-container">
-                    <label for="passwordConfirmation">
-                      Confirm your Password
-                    </label>
-
-                    <input
-                      id="passwordConfirmation"
-                      name="passwordConfirmation"
-                      ${ref(this.passwordConfirmationRef)}
-                      autocomplete="new-password"
-                      type="${this.showingPassword ? "text" : "password"}"
-                      placeholder="Confirm your Password"
-                    />
-                  </div>
-                `
-              : undefined}
-          </div>
-
-          <button-component
+            <button-component
             ${ref(this.signUpRef)}
             class="big"
             .expectLoad=${true}
