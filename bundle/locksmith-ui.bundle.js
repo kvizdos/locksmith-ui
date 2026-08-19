@@ -624,7 +624,7 @@ const ye=(e,t)=>{const i=e._$AN;if(void 0===i)return!1;for(const e of i)e._$AO?.
                 name="email"
                 type="email"
                 ${Me(this.emailRef)}
-                autocomplete="email"
+                autocomplete="username email"
                 autocapitalize="off"
                 placeholder="Your email"
                 .value=${this.forceEmail}

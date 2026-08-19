@@ -447,7 +447,7 @@ export class LocksmithRegistrationComponent extends LitElement {
                 name="email"
                 type="email"
                 ${ref(this.emailRef)}
-                autocomplete="email"
+                autocomplete="username email"
                 autocapitalize="off"
                 placeholder="Your email"
                 .value=${this.forceEmail}
